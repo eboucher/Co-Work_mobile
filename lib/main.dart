@@ -17,7 +17,13 @@ class Home extends StatelessWidget {
         backgroundColor: Colors.blueAccent[200],
       ),
       body: Center(
-        child: Image.asset('assets/coworking-1.jpg')
+        child: IconButton(
+          onPressed: () {
+            print('Да разъебись ты триебучим проебом хуепуполо залупоглазое');
+          },
+          icon: Icon(Icons.alternate_email),
+          color: Colors.amber
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
