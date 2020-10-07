@@ -1,5 +1,5 @@
-name: co_work
-description: Mobile app for a company that provides shared workspaces for technology startups and services for other enterprises or entrepreneurs.
+name: cowork_mobile
+description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

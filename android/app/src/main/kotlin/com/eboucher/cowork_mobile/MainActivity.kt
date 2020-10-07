@@ -1,4 +1,4 @@
-package com.example.co_work
+package com.eboucher.cowork_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 
