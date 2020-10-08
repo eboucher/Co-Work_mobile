@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -16,14 +17,22 @@ class Home extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.blueAccent[200],
       ),
-      body: Center(
-        child: IconButton(
-          onPressed: () {
-            print('Да разъебись ты триебучим проебом хуепуполо залупоглазое');
-          },
-          icon: Icon(Icons.alternate_email),
-          color: Colors.amber
-        )
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text('Мне пиздец'),
+          FlatButton(
+            onPressed: (){},
+            color: Colors.amber,
+            child: Text('Всем похуй'),
+          ),
+          Container(
+            color: Colors.cyan,
+            padding: EdgeInsets.all(30.0),
+            child: Text('Ебанута какая-то'),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
