@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
               fontFamily: 'OpenSans',
             ),
             validator: (input) =>
-            input != "" ? null : "VEUILLEZ ENTRE UN NOM DE COMPTE",
+            input != "" ? null : "Enter your username",
             onSaved: (input) => _username = input,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
                 Icons.account_box,
                 color: Colors.white,
               ),
-              hintText: 'Entrer votre username',
+              hintText: 'Enter your username',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -64,10 +64,10 @@ class _LoginState extends State<Login> {
         var user = await Auth.login(_username, _password);
         var token = user['token']['access_token'];
         await storage.write(key: "token", value: "Bearer " + token);
-        FlushBarMessage.goodMessage(content: 'connection reussis').showFlushBar(context);
+        FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context);
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Coworking')),
+            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
                 (Route<dynamic> route) => false);
       } catch (e) {
         print(e);
@@ -120,10 +120,10 @@ class _LoginState extends State<Login> {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
-        onPressed: () => print('Mot de passe oublié ?'),
+        onPressed: () => print('Forgot your password?'),
         padding: EdgeInsets.only(right: 0.0),
         child: Text(
-          'Mot de passe oublié ?',
+          'Forgot your password?',
           style: kLabelStyle,
         ),
       ),
@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
         ),
         color: Colors.white,
         child: Text(
-          'CONNEXION',
+          'LOGIN',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -167,7 +167,7 @@ class _LoginState extends State<Login> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Pas encore de compte ?',
+              text: 'Not a member yet?',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -175,7 +175,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             TextSpan(
-              text: 'Inscrivez vous !',
+              text: 'Sign Up!',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -228,7 +228,7 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'Connexion',
+                            'Login',
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'OpenSans',

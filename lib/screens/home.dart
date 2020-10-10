@@ -10,14 +10,15 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar( backgroundColor: Color(0xFF283593),title: Text(title)),
-        body:
-          Container(
-            child:
-              SingleChildScrollView()),
+      appBar: AppBar( backgroundColor: Color(0xFF283593),title: Text(title)),
+      body:
+        Container(
+          child:
+            SingleChildScrollView()),
 
-      drawer: Container( width:200,
-          child:Drawer(
+      drawer: Container(
+        width:200,
+        child:Drawer(
           // Add a ListView to the drawer. This ensures the user can scroll
           // through the options in the drawer if there isn't enough vertical
           // space to fit everything.

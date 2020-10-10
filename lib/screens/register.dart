@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> {
               fontFamily: 'OpenSans',
             ),
             validator: (input) =>
-            input != "" ? null : "VEUILLEZ ENTRE UN NOM DE COMPTE",
+            input != "" ? null : "Please enter a username",
             onSaved: (input) => _username = input,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -43,7 +43,7 @@ class _RegisterState extends State<Register> {
                 Icons.account_box,
                 color: Colors.white,
               ),
-              hintText: 'Entrer votre username',
+              hintText: 'Enter your username',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -57,7 +57,7 @@ class _RegisterState extends State<Register> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Mot de passe',
+          'Password',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -72,7 +72,7 @@ class _RegisterState extends State<Register> {
               fontFamily: 'OpenSans',
             ),
             validator: (input) =>
-            input != "" ? null : "VEUILLEZ ENTRE UN MOT DE PASSE",
+            input != "" ? null : "PLEASE ENTER A PASSWORD",
             onSaved: (input) => _password = input,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -81,7 +81,7 @@ class _RegisterState extends State<Register> {
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Entrer votre mot de passe',
+              hintText: 'Enter your password',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -95,7 +95,7 @@ class _RegisterState extends State<Register> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Confimez le mot de passe',
+          'Confirm your password',
           style: kLabelStyle,
         ),
         SizedBox(height: 10.0),
@@ -110,7 +110,7 @@ class _RegisterState extends State<Register> {
               fontFamily: 'OpenSans',
             ),
             validator: (input) =>
-            input != ""  ? null : "VEUILLEZ CONFIRMER LE MOT DE PASSE",
+            input != ""  ? null : "PLEASE CONFIRM YOUR PASSWORD",
             onSaved: (input) => _password2 = input,
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -119,7 +119,7 @@ class _RegisterState extends State<Register> {
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Retappez votre mot de passe',
+              hintText: 'Type password again',
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -142,7 +142,7 @@ class _RegisterState extends State<Register> {
         ),
         color: Colors.white,
         child: Text(
-          'INSCRIPTION',
+          'REGISTER',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
@@ -164,16 +164,16 @@ class _RegisterState extends State<Register> {
       print(_password);
       print(_password2);
       if(_password != _password2){
-        FlushBarMessage.errorMessage(content: "Les mots de passe sont différents").showFlushBar(context);
+        FlushBarMessage.errorMessage(content: "Passwords do not match").showFlushBar(context);
         return;
       }
       try {
         print('cc');
         await Auth.register(_username, _password);
-        FlushBarMessage.goodMessage(content: 'Inscription réussis').showFlushBar(context);
+        FlushBarMessage.goodMessage(content: 'Successful registration').showFlushBar(context);
       } catch (e) {
         print(e);
-        FlushBarMessage.errorMessage(content: "Erreur lors de l'inscription").showFlushBar(context);
+        FlushBarMessage.errorMessage(content: "Error during registration").showFlushBar(context);
       }
     }
   }
@@ -185,7 +185,7 @@ class _RegisterState extends State<Register> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Déja un compte  ?',
+              text: 'Already a member?',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -193,7 +193,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             TextSpan(
-              text: 'Connectez vous !',
+              text: 'Log in!',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -246,7 +246,7 @@ class _RegisterState extends State<Register> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Inscription',
+                          'Register',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'OpenSans',
