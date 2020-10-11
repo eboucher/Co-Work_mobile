@@ -10,7 +10,7 @@ class Auth {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'identifier': username,
+        'username': username,
         'password': password,
       }),);
     print(json.decode(response.body));

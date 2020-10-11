@@ -193,7 +193,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
             TextSpan(
-              text: 'Log in!',
+              text: 'Log in',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -218,19 +218,11 @@ class _RegisterState extends State<Register> {
             child: Stack(
               children: <Widget>[
                 Container(
-                  height: double.infinity,
-                  width: double.infinity,
+                  constraints: BoxConstraints.expand(),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF4f6afc),
-                        Color(0xFF3F51B5),
-                        Color(0xFF283593),
-                        Color(0xFF283593),
-                      ],
-                      stops: [0.1, 0.4, 0.7, 0.9],
+                    image: DecorationImage(
+                        image: AssetImage('assets/background.jpg'),
+                        fit: BoxFit.cover
                     ),
                   ),
                 ),

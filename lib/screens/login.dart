@@ -2,6 +2,7 @@ import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:cowork_mobile/screens/register.dart';
 import 'package:cowork_mobile/services/auth.dart';
 import 'package:cowork_mobile/helpers/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -56,27 +57,6 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<void> _submit() async {
-    print(formKey);
-    if (formKey.currentState.validate()) {
-      formKey.currentState.save();
-      try {
-        var user = await Auth.login(_username, _password);
-        var token = user['token']['access_token'];
-        await storage.write(key: "token", value: "Bearer " + token);
-        FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context);
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
-                (Route<dynamic> route) => false);
-      } catch (e) {
-        print(e);
-        FlushBarMessage.errorMessage(content: "Nom d'utilisateur ou mot de passe incorrect").showFlushBar(context);
-
-      }
-    }
-  }
-
 
   Widget _buildPasswordTF() {
     return Column(
@@ -104,16 +84,37 @@ class _LoginState extends State<Login> {
                 Icons.lock,
                 color: Colors.white,
               ),
-              hintText: 'Entrer votre mot de passe',
+              hintText: 'Enter your password',
               hintStyle: kHintTextStyle,
             ),
             onSaved: (input) => _password = input,
             validator: (input) =>
-            input != "" ? null : "VEUILLEZ ENTRE UN MOT DE PASSE",
+            input != "" ? null : "PLEASE ENTER A PASSWORD",
           ),
         ),
       ],
     );
+  }
+
+  Future<void> _submit() async {
+    print(formKey);
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      try {
+        var user = await Auth.login(_username, _password);
+        var token = user['token']['access_token'];
+        await storage.write(key: "token", value: "Bearer " + token);
+        FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
+                (Route<dynamic> route) => false);
+      } catch (e) {
+        print(e);
+        FlushBarMessage.errorMessage(content: "Username or password incorrect").showFlushBar(context);
+
+      }
+    }
   }
 
   Widget _buildForgotPasswordBtn() {
@@ -158,11 +159,11 @@ class _LoginState extends State<Login> {
   }
 
 
-
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => Navigator.push(  context,
-        MaterialPageRoute(builder: (context) => Register()),),
+      onTap: () => Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Register()),
+      ),
       child: RichText(
         text: TextSpan(
           children: [
@@ -175,7 +176,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             TextSpan(
-              text: 'Sign Up!',
+              text: 'Sign Up',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -188,6 +189,7 @@ class _LoginState extends State<Login> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,20 +201,12 @@ class _LoginState extends State<Login> {
               onTap: () => FocusScope.of(context).unfocus(),
               child: Stack(
                 children: <Widget>[
-                  Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF4f6afc),
-                          Color(0xFF3F51B5),
-                          Color(0xFF283593),
-                          Color(0xFF283593),
-                        ],
-                        stops: [0.1, 0.4, 0.7, 0.9],
+                Container(
+                constraints: BoxConstraints.expand(),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/background.jpg'),
+                      fit: BoxFit.cover
                       ),
                     ),
                   ),
