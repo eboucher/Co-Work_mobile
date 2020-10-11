@@ -10,7 +10,7 @@ class Auth {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'username': username,
+        'identifier': username,
         'password': password,
       }),);
     print(json.decode(response.body));
@@ -31,7 +31,7 @@ class Auth {
         'password': password,
         'email' : 'user@mail.com',
       }),);
-    print(response.body);
+    print("response.body = " + response.body);
     if (response.statusCode == 201) {
       return ;
     } else {
