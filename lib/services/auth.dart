@@ -10,13 +10,16 @@ class Auth {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'username': username,
+        'identifier': username,
         'password': password,
       }),);
     print(json.decode(response.body));
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
+      print("RESPONSE 200 HEREEEEE !");
+      print(response.body.toString());
       return json.decode(response.body);
     } else {
+      print("FUCK EVERYONE !" + response.statusCode.toString());
       throw Exception('Incorrect email or password');
     }
   }
@@ -31,7 +34,7 @@ class Auth {
         'password': password,
         'email' : 'user@mail.com',
       }),);
-    print(response.body);
+    print("response.body = " + response.body);
     if (response.statusCode == 201) {
       return ;
     } else {

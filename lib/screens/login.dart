@@ -102,13 +102,14 @@ class _LoginState extends State<Login> {
       formKey.currentState.save();
       try {
         var user = await Auth.login(_username, _password);
-        var token = user['token']['access_token'];
+        var token = user['jwt'];
         await storage.write(key: "token", value: "Bearer " + token);
-        FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context);
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
-                (Route<dynamic> route) => false);
+        FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context).then((_) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
+                  (Route<dynamic> route) => false);
+        });
       } catch (e) {
         print(e);
         FlushBarMessage.errorMessage(content: "Username or password incorrect").showFlushBar(context);

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 
-final URL_API = "http://localhost:1337";
+//final URL_API = "http://localhost:1337";
+final URL_API = "http://10.0.2.2:1337";
 
 final kHintTextStyle = TextStyle(
   color: Colors.white54,
