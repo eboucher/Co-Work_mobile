@@ -103,12 +103,14 @@ class _LoginState extends State<Login> {
       try {
         var user = await Auth.login(_username, _password);
         var token = user['jwt'];
+        print("TOKEN = " + token);
         await storage.write(key: "token", value: "Bearer " + token);
         FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context).then((_) {
           Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
-                  (Route<dynamic> route) => false);
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
+            (Route<dynamic> route) => false
+          );
         });
       } catch (e) {
         print(e);

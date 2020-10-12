@@ -1,3 +1,4 @@
+import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cowork_mobile/screens/booking.dart';
@@ -6,6 +7,8 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'login.dart';
 
 
 class Home extends StatelessWidget {
@@ -72,6 +75,21 @@ class Home extends StatelessWidget {
                     // Then close the drawer
                     Navigator.pop(context);
                   },
+                ),
+                ListTile(
+                  title: Text('Logout'),
+                  onTap: () async {
+                    print("this.key.toString() = " + this.key.toString());
+                    await storage.write(key: "token", value: "");
+                    print("this.key.toString() = " + this.key.toString());
+                    FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) => Login()),
+                              (Route<dynamic> route) => false
+                      );
+                    });
+                  }
                 ),
               ],
             ),
