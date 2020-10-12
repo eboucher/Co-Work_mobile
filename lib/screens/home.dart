@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cowork_mobile/screens/booking.dart';
 import 'package:cowork_mobile/screens/bookings.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'login.dart';
 
+var imgList = ['coworking-1.jpg','coworking-2.jpeg','coworking-3.jpg','coworking-4.jpg','coworking-5.jpg','coworking-6.jpg'];
+var nameOpen = ['Bastille','République','Odéon','Beaubourg',"Place d'italie",'Ternes'];
 
 class Home extends StatelessWidget {
   final String title;
@@ -36,7 +39,11 @@ class Home extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w900
                       )
-                  )
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  CarouselSlider(items: imageSliders, options: null)
                 ],
               ),
             )
@@ -115,4 +122,44 @@ class Home extends StatelessWidget {
         )
     );
   }
+
+  final List<Widget> imageSliders = imgList.map((item) => Container(
+    child: Container(
+      margin: EdgeInsets.all(5.0),
+      child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          child: Stack(
+            children: <Widget>[
+              Image.asset('assets/'+item),
+              Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                right: 0.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color.fromARGB(200, 0, 0, 0),
+                        Color.fromARGB(0, 0, 0, 0)
+                      ],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                  child: Text(
+                    '${nameOpen[imgList.indexOf(item)]}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+      ),
+    ),
+  )).toList();
 }
