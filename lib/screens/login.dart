@@ -1,3 +1,4 @@
+import 'package:cowork_mobile/models/user.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:cowork_mobile/screens/register.dart';
 import 'package:cowork_mobile/services/auth.dart';
@@ -108,7 +109,7 @@ class _LoginState extends State<Login> {
         FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context).then((_) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work')),
+            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work', user: User.fromJson(user))),
             (Route<dynamic> route) => false
           );
         });

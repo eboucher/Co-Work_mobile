@@ -1,8 +1,10 @@
+import 'package:cowork_mobile/models/user.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cowork_mobile/screens/booking.dart';
 import 'package:cowork_mobile/screens/bookings.dart';
+
 import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +15,8 @@ import 'login.dart';
 
 class Home extends StatelessWidget {
   final String title;
-  Home({Key key, this.title}) : super(key: key);
+  User user;
+  Home({Key key, this.title, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,22 @@ class Home extends StatelessWidget {
         body:
         Container(
             child:
-            SingleChildScrollView()),
+            SingleChildScrollView(
+              child:
+              Column(
+                children: <Widget>[
+                  Text(
+                    "Co'Work",
+                    style: GoogleFonts.openSans(
+                        color: Colors.blueGrey,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900
+                      )
+                  )
+                ],
+              ),
+            )
+        ),
 
         drawer: Container(
           width:200,
@@ -79,9 +97,9 @@ class Home extends StatelessWidget {
                 ListTile(
                   title: Text('Logout'),
                   onTap: () async {
-                    print("this.key.toString() = " + this.key.toString());
+                    print("storage.read() = " + await storage.read(key: "token"));
                     await storage.write(key: "token", value: "");
-                    print("this.key.toString() = " + this.key.toString());
+                    print("storage.read() = " + await storage.read(key: "token"));
                     FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
                       Navigator.pushAndRemoveUntil(
                           context,
