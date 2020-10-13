@@ -13,7 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'login.dart';
 
-var imgList = ['coworking-1.jpg','coworking-2.jpeg','coworking-3.jpg','coworking-4.jpg','coworking-5.jpg','coworking-6.jpg'];
+var imgList = ['coworking-1.jpg','coworking-2.jpg','coworking-3.jpg','coworking-4.jpg','coworking-5.jpg','coworking-6.jpg'];
 var nameOpen = ['Bastille','République','Odéon','Beaubourg',"Place d'italie",'Ternes'];
 
 class Home extends StatelessWidget {
@@ -43,7 +43,25 @@ class Home extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
-                  CarouselSlider(items: imageSliders, options: null)
+                  CarouselSlider(
+                    items: imageSliders,
+                    options: CarouselOptions(
+                    autoPlay: true,
+                    aspectRatio: 2.0,
+                    enlargeCenterPage: true,
+                    ),
+                  ),
+                  SizedBox(height: 18),
+                  Text(
+                    "Welcome to Co'Work!",
+                    style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300
+                      )
+                    ),
+                  )
                 ],
               ),
             )
