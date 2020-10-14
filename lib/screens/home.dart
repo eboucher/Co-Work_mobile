@@ -28,115 +28,106 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar( backgroundColor: Color(0xFF283593),title: Text(title)),
-        body:
-        Container(
-            child:
-            SingleChildScrollView(
-              child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    "Welcome to Co'Work!",
-                    style: GoogleFonts.openSans(
-                        color: Colors.blueGrey,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900
-                      )
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  SizedBox(height: 18),
-                  Text(
-                    "Navigate through the app to find workspaces, book your"
-                        " special place, organize meetings and more.",
-                    style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w300
-                      )
-                    ),
-                  ),
-                  Container(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: ListView.builder(
-                              // scrollDirection: Axis.horizontal,
-                              itemCount: cryptoData.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                  height: 220,
-                                  width: double.maxFinite,
-                                  child: Card(
-                                    elevation: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          top: BorderSide(
-                                              width: 2.0, color: cryptoData[index]['iconColor']),
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(7),
-                                        child: Stack(children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Padding(
-                                                    padding: const EdgeInsets.only(left: 10, top: 5),
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        Row(
-                                                          children: <Widget>[
-                                                            cryptoIcon(cryptoData[index]),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            cryptoNameSymbol(cryptoData[index]),
-                                                            Spacer(),
-                                                            cryptoChange(cryptoData[index]),
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            changeIcon(cryptoData[index]),
-                                                            SizedBox(
-                                                              width: 20,
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: <Widget>[
-                                                            cryptoAmount(cryptoData[index])
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ))
-                                              ],
-                                            ),
-                                          )
-                                        ]),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
+        appBar: AppBar(backgroundColor: Color(0xFF283593),title: Text(title)),
+        body: Container(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "Welcome to Co'Work!",
+                  style: GoogleFonts.openSans(
+                      color: Colors.blueGrey,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900
                   )
-                ],
               ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(height: 18),
+                Text(
+                  "Navigate through the app to find workspaces, book your"
+                      " special place, organize meetings and more.",
+                  style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300
+                      )
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    // scrollDirection: Axis.horizontal,
+                      shrinkWrap : true,
+                      itemCount: cryptoData.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          height: 220,
+                          width: double.maxFinite,
+                          child: Card(
+                            elevation: 5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                      width: 2.0, color: cryptoData[index]['iconColor']),
+                                ),
+                                color: Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(7),
+                                child: Stack(children: <Widget>[
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Padding(
+                                            padding: const EdgeInsets.only(left: 10, top: 5),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    cryptoIcon(cryptoData[index]),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    cryptoNameSymbol(cryptoData[index]),
+                                                    Spacer(),
+                                                    cryptoChange(cryptoData[index]),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    changeIcon(cryptoData[index]),
+                                                    SizedBox(
+                                                      width: 20,
+                                                    )
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    cryptoAmount(cryptoData[index])
+                                                  ],
+                                                )
+                                              ],
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ]
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
             ),
+          )
 
         ),
 
