@@ -1,7 +1,7 @@
 import 'package:cowork_mobile/data/crypto.dart';
+import 'package:cowork_mobile/data/locations.dart';
 import 'package:cowork_mobile/models/user.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
-import 'package:crypto_font_icons/crypto_font_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cowork_mobile/screens/booking.dart';
@@ -20,7 +20,7 @@ var nameOpen = ['Bastille','République','Odéon','Beaubourg',"Place d'italie",'
 
 class Home extends StatelessWidget {
 
-  var cryptoData = CryptoData.getData;
+  var locations = Locations.getData;
   final String title;
   User user;
   Home({Key key, this.title, this.user}) : super(key: key);
@@ -61,7 +61,7 @@ class Home extends StatelessWidget {
                   child: ListView.builder(
                     // scrollDirection: Axis.horizontal,
                       shrinkWrap : true,
-                      itemCount: cryptoData.length,
+                      itemCount: locations.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -73,7 +73,8 @@ class Home extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border(
                                   top: BorderSide(
-                                      width: 2.0, color: cryptoData[index]['iconColor']),
+                                      width: 2.0,
+                                      color: locations[index]['iconColor']),
                                 ),
                                 color: Colors.white,
                               ),
@@ -85,34 +86,27 @@ class Home extends StatelessWidget {
                                     child: Stack(
                                       children: <Widget>[
                                         Padding(
-                                            padding: const EdgeInsets.only(left: 10, top: 5),
-                                            child: Column(
+                                            padding: const EdgeInsets.only(left: 30, top: 5),
+                                            child: Row(
                                               children: <Widget>[
-                                                Row(
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: <Widget>[
-                                                    cryptoIcon(cryptoData[index]),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    cryptoNameSymbol(cryptoData[index]),
-                                                    Spacer(),
-                                                    cryptoChange(cryptoData[index]),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    changeIcon(cryptoData[index]),
-                                                    SizedBox(
-                                                      width: 20,
-                                                    )
+                                                    locationName(locations[index]),
+                                                    locationAvatar(locations[index]),
                                                   ],
                                                 ),
-                                                Row(
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: <Widget>[
-                                                    cryptoAmount(cryptoData[index])
+                                                    //cryptoAmount(locations[index]),
+                                                    //cryptoAmount(locations[index]),
+                                                    Spacer(),
+                                                    //cryptoChange(locations[index]),
                                                   ],
                                                 )
                                               ],
-                                            )
+                                            ),
                                         )
                                       ],
                                     ),
@@ -205,70 +199,18 @@ class Home extends StatelessWidget {
     );
   }
 
-  final List<Widget> imageSliders = imgList.map((item) => Container(
-    child: Container(
-      margin: EdgeInsets.all(5.0),
-      child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          child: Stack(
-            children: <Widget>[
-              Image.asset('assets/'+item),
-              Positioned(
-                bottom: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(200, 0, 0, 0),
-                        Color.fromARGB(0, 0, 0, 0)
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                  child: Text(
-                    '${nameOpen[imgList.indexOf(item)]}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-      ),
-    ),
-  )).toList();
 
-
-  Widget cryptoIcon(data) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 15.0),
-      child: Align(
-          alignment: Alignment.centerLeft,
-          child: Icon(
-            data['icon'],
-            color: data['iconColor'],
-            size: 40,
-          )),
-    );
-  }
-  Widget cryptoNameSymbol(data) {
+  Widget locationName(location) {
     return Align(
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          text: '${data['name']}',
+          text: '${location['name']}',
           style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 20),
+              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 30),
           children: <TextSpan>[
             TextSpan(
-                text: '\n${data['symbol']}',
+                text: '\n${location['city']}',
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 15,
@@ -278,42 +220,20 @@ class Home extends StatelessWidget {
       ),
     );
   }
-  Widget cryptoChange(data) {
+
+  Widget locationAvatar(location) {
     return Align(
-      alignment: Alignment.topRight,
-      child: RichText(
-        text: TextSpan(
-          text: '${data['change']}',
-          style: TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.green, fontSize: 20),
-          children: <TextSpan>[
-            TextSpan(
-                text: '\n${data['changeValue']}',
-                style: TextStyle(
-                    color: data['changeColor'],
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold)),
-          ],
-        ),
-      ),
+      child: Expanded(
+        child: Image.asset(
+          'assets/'+'${location['avatar']}',
+            width: 150,
+            height: 150,
+        )
+      )
     );
   }
-  Widget changeIcon(data) {
-    return Align(
-        alignment: Alignment.topRight,
-        child: data['change'].contains('-')
-        ? Icon(
-      Typicons.arrow_sorted_down,
-      color: data['changeColor'],
-      size: 30,
-    )
-        : Icon(
-      Typicons.arrow_sorted_up,
-      color: data['changeColor'],
-      size: 30,
-    ));
-  }
-  Widget cryptoAmount(data) {
+
+  Widget cryptoAmount(location) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
@@ -323,7 +243,7 @@ class Home extends StatelessWidget {
             RichText(
               textAlign: TextAlign.left,
               text: TextSpan(
-                text: '\n${data['value']}',
+                text: '\n${location['value']}',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 35,
