@@ -65,7 +65,7 @@ class Home extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          height: 300,
+                          height: 400,
                           width: double.maxFinite,
                           child: Card(
                             elevation: 5,
@@ -86,17 +86,22 @@ class Home extends StatelessWidget {
                                     child: Stack(
                                       children: <Widget>[
                                         Padding(
-                                            padding: const EdgeInsets.only(left: 30, top: 5),
-                                            child: Row(
+                                            padding: const EdgeInsets.only(left: 20, top: 5),
+                                            child: Column(
                                               children: <Widget>[
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
                                                     locationName(locations[index]),
-                                                    locationAvatar(locations[index]),
                                                   ],
                                                 ),
-                                                Column(
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    locationImage(locations[index]),
+                                                  ],
+                                                ),
+                                                Row(
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: <Widget>[
                                                     //cryptoAmount(locations[index]),
@@ -180,14 +185,13 @@ class Home extends StatelessWidget {
                 ListTile(
                   title: Text('Logout'),
                   onTap: () async {
-                    print("storage.read() = " + await storage.read(key: "token"));
                     await storage.write(key: "token", value: "");
-                    print("storage.read() = " + await storage.read(key: "token"));
+                    //print("storage.read() = " + await storage.read(key: "token"));
                     FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (BuildContext context) => Login()),
-                              (Route<dynamic> route) => false
+                      MaterialPageRoute(builder: (BuildContext context) => Login()),
+                          (Route<dynamic> route) => false
                       );
                     });
                   }
@@ -221,13 +225,13 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget locationAvatar(location) {
+  Widget locationImage(location) {
     return Align(
       child: Expanded(
         child: Image.asset(
           'assets/'+'${location['avatar']}',
-            width: 150,
-            height: 150,
+            width: 320,
+            height: 180,
         )
       )
     );
