@@ -65,7 +65,7 @@ class Home extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          height: 220,
+                          height: 300,
                           width: double.maxFinite,
                           child: Card(
                             elevation: 5,
