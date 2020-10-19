@@ -28,7 +28,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: Color(0xFF283593),title: Text(title)),
         body: Container(
           child: Container(
             child: Column(
@@ -59,13 +58,14 @@ class Home extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    // scrollDirection: Axis.horizontal,
+                      //primary : true,
+                      // scrollDirection: Axis.horizontal,
                       shrinkWrap : true,
                       itemCount: locations.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          height: 400,
+                          height: 450,
                           width: double.maxFinite,
                           child: Card(
                             elevation: 5,
@@ -264,31 +264,112 @@ class Home extends StatelessWidget {
 
   Widget addOns(location) {
     const IconData network_wifi = IconData(0xe8a6, fontFamily: 'MaterialIcons');
+    const IconData calendar_today = IconData(0xe623, fontFamily: 'MaterialIcons');
 
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
-        padding: const EdgeInsets.only(left: 20.0),
+        padding: const EdgeInsets.only(left: 0),
         child: Row(
           children: <Widget>[
-            RichText(
-              textAlign: TextAlign.left,
-              text: TextSpan(
-                text: '\nJust a test',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 10,
+            Column(
+              children: <Widget>[
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(30),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                              network_wifi,
+                              color: Colors.orange,
+                              size: 12),
+                          RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: '\nHigh speed Wi-Fi',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(30),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                              calendar_today,
+                              color: Colors.orange,
+                              size: 12),
+                          RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: '\nBookable meeting rooms',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(30),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                              network_wifi,
+                              color: Colors.orange,
+                              size: 12),
+                          RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: '\nBookable call rooms',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(30),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                              network_wifi,
+                              color: Colors.orange,
+                              size: 12),
+                          RichText(
+                            textAlign: TextAlign.left,
+                            text: TextSpan(
+                              text: '\nCozy lounges',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: '\nJust a test',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                ],
-              ),
+              ]
             ),
           ],
         ),

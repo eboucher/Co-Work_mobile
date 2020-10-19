@@ -31,7 +31,7 @@ class Auth {
         'password': password,
         'email' : 'user@mail.com',
       }),);
-    print("response.body = " + response.body);
+    //print("response.body = " + response.body);
     if (response.statusCode == 201) {
       return ;
     } else {
