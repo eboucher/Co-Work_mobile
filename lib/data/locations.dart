@@ -11,7 +11,7 @@ class Locations {
       'WiFi': true,
       'mealTray': true,
       'unlimitedDrinks': false,
-      'iconColor': Colors.orange,
+      'iconColor': Colors.blue,
     },
     {
       '_id': '2',
@@ -22,7 +22,7 @@ class Locations {
       'WiFi': true,
       'mealTray': true,
       'unlimitedDrinks': false,
-      'iconColor': Colors.orange,
+      'iconColor': Colors.blue,
     },
     {
       '_id': '3',
@@ -33,7 +33,7 @@ class Locations {
       'WiFi': true,
       'mealTray': true,
       'unlimitedDrinks': false,
-      'iconColor': Colors.orange,
+      'iconColor': Colors.blue,
     },
     {
       '_id': '4',
@@ -44,7 +44,7 @@ class Locations {
       'WiFi': true,
       'mealTray': true,
       'unlimitedDrinks': false,
-      'iconColor': Colors.orange,
+      'iconColor': Colors.blue,
     },
     {
       '_id': '5',
@@ -55,7 +55,7 @@ class Locations {
       'WiFi': true,
       'mealTray': true,
       'unlimitedDrinks': false,
-      'iconColor': Colors.orange,
+      'iconColor': Colors.blue,
     },
     {
       '_id': '6',
@@ -66,7 +66,7 @@ class Locations {
       'WiFi': true,
       'mealTray': true,
       'unlimitedDrinks': false,
-      'iconColor': Colors.orange,
+      'iconColor': Colors.blue,
     }
   ];
 }

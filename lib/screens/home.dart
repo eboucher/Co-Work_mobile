@@ -104,12 +104,37 @@ class Home extends StatelessWidget {
                                                 Row(
                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                   children: <Widget>[
-                                                    //cryptoAmount(locations[index]),
-                                                    //cryptoAmount(locations[index]),
+                                                    addOns(locations[index]),
                                                     Spacer(),
                                                     //cryptoChange(locations[index]),
                                                   ],
-                                                )
+                                                ),
+                                                Spacer(),
+                                                Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Spacer(),
+                                                    RaisedButton(
+                                                      onPressed: () {},
+                                                      textColor: Colors.white,
+                                                      padding: const EdgeInsets.all(0.0),
+                                                      child: Container(
+                                                        decoration: const BoxDecoration(
+                                                          gradient: LinearGradient(
+                                                            colors: <Color>[
+                                                              Color(0xFF0D47A1),
+                                                              Color(0xFF1976D2),
+                                                              Color(0xFF42A5F5),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        padding: const EdgeInsets.all(10.0),
+                                                        child:
+                                                        const Text('Proceed to booking', style: TextStyle(fontSize: 16)),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                         )
@@ -237,7 +262,9 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget cryptoAmount(location) {
+  Widget addOns(location) {
+    const IconData network_wifi = IconData(0xe8a6, fontFamily: 'MaterialIcons');
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Padding(
@@ -247,14 +274,14 @@ class Home extends StatelessWidget {
             RichText(
               textAlign: TextAlign.left,
               text: TextSpan(
-                text: '\n${location['value']}',
+                text: '\nJust a test',
                 style: TextStyle(
                   color: Colors.grey,
-                  fontSize: 35,
+                  fontSize: 10,
                 ),
                 children: <TextSpan>[
                   TextSpan(
-                      text: '\n0.1349',
+                      text: '\nJust a test',
                       style: TextStyle(
                           color: Colors.grey,
                           fontStyle: FontStyle.italic,
