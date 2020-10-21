@@ -13,13 +13,10 @@ class Auth {
         'identifier': username,
         'password': password,
       }),);
-    print(json.decode(response.body));
     if (response.statusCode == 200) {
-      print("RESPONSE 200 HEREEEEE !");
-      print(response.body.toString());
       return json.decode(response.body);
     } else {
-      print("FUCK EVERYONE !" + response.statusCode.toString());
+      //print("DAMN !" + response.statusCode.toString());
       throw Exception('Incorrect email or password');
     }
   }
@@ -34,7 +31,7 @@ class Auth {
         'password': password,
         'email' : 'user@mail.com',
       }),);
-    print("response.body = " + response.body);
+    //print("response.body = " + response.body);
     if (response.statusCode == 201) {
       return ;
     } else {

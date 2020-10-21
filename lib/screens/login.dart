@@ -98,13 +98,13 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> _submit() async {
-    print(formKey);
+    //print(formKey);
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
       try {
         var user = await Auth.login(_username, _password);
         var token = user['jwt'];
-        print("TOKEN = " + token);
+        //print("TOKEN = " + token);
         await storage.write(key: "token", value: "Bearer " + token);
         FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context).then((_) {
           Navigator.pushAndRemoveUntil(
@@ -114,7 +114,7 @@ class _LoginState extends State<Login> {
           );
         });
       } catch (e) {
-        print(e);
+        //print(e);
         FlushBarMessage.errorMessage(content: "Username or password incorrect").showFlushBar(context);
 
       }
