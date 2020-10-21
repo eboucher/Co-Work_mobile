@@ -1,13 +1,12 @@
 import 'package:cowork_mobile/data/crypto.dart';
-import 'package:cowork_mobile/data/locations_data.dart';
 import 'package:cowork_mobile/models/user.dart';
+import 'package:cowork_mobile/data/locations_data.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cowork_mobile/screens/booking.dart';
 import 'package:cowork_mobile/screens/bookings.dart';
 
-import 'locations.dart';
 import 'login.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -16,50 +15,40 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:typicons_flutter/typicons.dart';
 
-class Home extends StatelessWidget {
+class Locations extends StatelessWidget {
 
   final locations = LocationsData.getData;
   final String title;
-  final User user;
-  Home({Key key, this.title, this.user}) : super(key: key);
+  Locations({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Color(0xff2446a6),
-            title: Text(title),
-            centerTitle: true,
+          backgroundColor: Color(0xff2446a6),
+          title: Text(title),
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                  "Welcome to Co'Work!",
-                  style: GoogleFonts.openSans(
-                    color: Colors.blueGrey,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900
-                  )
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(
+                  height: 8,
                 ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  SizedBox(height: 18),
-                  Text(
-                    "Navigate through the app to find workspaces, book your"
-                        " special place, organize meetings and more.",
+                Text(
+                    "Locations",
                     style: GoogleFonts.openSans(
-                      textStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300
-                      )
-                    ),
-                  ),
-                  Container(
-                    child: ListView.builder(
+                        color: Colors.blueGrey,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900
+                    )
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  child: ListView.builder(
                       primary : false,
                       // scrollDirection: Axis.horizontal,
                       shrinkWrap : true,
@@ -107,7 +96,7 @@ class Home extends StatelessWidget {
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: <Widget>[
                                                   Wrap(
-                                                      children: [
+                                                    children: [
                                                       addOns(locations[index]),
                                                     ],
                                                   ),
@@ -121,6 +110,7 @@ class Home extends StatelessWidget {
                                                 children: <Widget>[
                                                   Spacer(),
                                                   RaisedButton(
+                                                    onPressed: () {},
                                                     textColor: Colors.white,
                                                     padding: const EdgeInsets.all(0.0),
                                                     child: Container(
@@ -137,15 +127,6 @@ class Home extends StatelessWidget {
                                                       child:
                                                       const Text('Proceed to booking', style: TextStyle(fontSize: 16)),
                                                     ),
-                                                    onPressed: () {
-                                                      FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
-                                                        Navigator.pushAndRemoveUntil(
-                                                            context,
-                                                            MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
-                                                                (Route<dynamic> route) => false
-                                                        );
-                                                      });
-                                                    },
                                                   )
                                                 ],
                                               ),
@@ -156,15 +137,15 @@ class Home extends StatelessWidget {
                                     ),
                                   )
                                 ]
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }),
-                  ),
-                ]
-              ),
+                        );
+                      }),
+                ),
+              ]
+          ),
         ),
 
         drawer: Container(
@@ -220,18 +201,18 @@ class Home extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  title: Text('Logout'),
-                  onTap: () async {
-                    await storage.write(key: "token", value: "");
-                    //print("storage.read() = " + await storage.read(key: "token"));
-                    FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                      MaterialPageRoute(builder: (BuildContext context) => Login()),
-                          (Route<dynamic> route) => false
-                      );
-                    });
-                  }
+                    title: Text('Logout'),
+                    onTap: () async {
+                      await storage.write(key: "token", value: "");
+                      //print("storage.read() = " + await storage.read(key: "token"));
+                      FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (BuildContext context) => Login()),
+                                (Route<dynamic> route) => false
+                        );
+                      });
+                    }
                 ),
               ],
             ),
@@ -263,13 +244,13 @@ class Home extends StatelessWidget {
 
   Widget locationImage(location) {
     return Align(
-      child: Container(
-        child: Image.asset(
-          'assets/'+'${location['avatar']}',
-            width: 320,
-            height: 180,
+        child: Container(
+            child: Image.asset(
+              'assets/'+'${location['avatar']}',
+              width: 320,
+              height: 180,
+            )
         )
-      )
     );
   }
 
@@ -278,122 +259,122 @@ class Home extends StatelessWidget {
     const IconData calendar_today = IconData(0xe623, fontFamily: 'MaterialIcons');
 
     return Wrap(
-      direction: Axis.horizontal,
-      children: <Widget>[
-
-        Wrap(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(30),
-              width: 180,
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                      network_wifi,
-                      color: Colors.orange,
-                      size: 12),
-                  RichText(
-                    textAlign: TextAlign.left,
-                    text: TextSpan(
-                      text: '\nHigh speed Wi-Fi',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-
-        Wrap(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(30),
-              width: 180,
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                      calendar_today,
-                      color: Colors.brown,
-                      size: 12),
-                  RichText(
-                    textAlign: TextAlign.left,
-                    text: TextSpan(
-                      text: '\nBookable meeting rooms',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-
-      Wrap(
+        direction: Axis.horizontal,
         children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(30),
-              width: 180,
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                      network_wifi,
-                      color: Colors.orange,
-                      size: 12),
-                  RichText(
-                    textAlign: TextAlign.left,
-                    text: TextSpan(
-                      text: '\nBookable call rooms',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 10,
+
+          Wrap(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(30),
+                width: 180,
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                        network_wifi,
+                        color: Colors.orange,
+                        size: 12),
+                    RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                        text: '\nHigh speed Wi-Fi',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 10,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
-      Wrap(
-        children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(30),
-              width: 180,
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                      network_wifi,
-                      color: Colors.orange,
-                      size: 12),
-                  RichText(
-                    textAlign: TextAlign.left,
-                    text: TextSpan(
-                      text: '\nCozy lounges',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                        fontSize: 10,
+          Wrap(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(30),
+                width: 180,
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                        calendar_today,
+                        color: Colors.brown,
+                        size: 12),
+                    RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                        text: '\nBookable meeting rooms',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 10,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
 
-      ]
+          Wrap(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(30),
+                width: 180,
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                        network_wifi,
+                        color: Colors.orange,
+                        size: 12),
+                    RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                        text: '\nBookable call rooms',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          Wrap(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(30),
+                width: 180,
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                        network_wifi,
+                        color: Colors.orange,
+                        size: 12),
+                    RichText(
+                      textAlign: TextAlign.left,
+                      text: TextSpan(
+                        text: '\nCozy lounges',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+        ]
     );
   }
 }

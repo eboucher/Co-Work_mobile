@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Locations {
+class LocationsData {
   static final getData = [
     {
       '_id': '1',
