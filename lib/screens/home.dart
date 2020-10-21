@@ -59,33 +59,33 @@ class Home extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      child: RaisedButton(
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(0.0),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Color(0xFF0D47A1),
-                                Color(0xFF1976D2),
-                                Color(0xFF42A5F5),
-                              ],
-                            ),
+                    child: RaisedButton(
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: <Color>[
+                              Color(0xFF0D47A1),
+                              Color(0xFF1976D2),
+                              Color(0xFF42A5F5),
+                            ],
                           ),
-                          padding: const EdgeInsets.all(10.0),
-                          child:
-                          const Text('Go to locations', style: TextStyle(fontSize: 16)),
                         ),
-                        onPressed: () {
-                          FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
-                                    (Route<dynamic> route) => false
-                            );
-                          });
-                        },
-                      )
+                        padding: const EdgeInsets.all(10.0),
+                        child:
+                        const Text('Go to locations', style: TextStyle(fontSize: 16)),
+                      ),
+                      onPressed: () {
+                        FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
+                                  (Route<dynamic> route) => false
+                          );
+                        });
+                      },
+                    )
                   ),
                 ]
               ),

@@ -114,7 +114,6 @@ class Locations extends StatelessWidget {
                                                 children: <Widget>[
                                                   Spacer(),
                                                   RaisedButton(
-                                                    onPressed: () {},
                                                     textColor: Colors.white,
                                                     padding: const EdgeInsets.all(0.0),
                                                     child: Container(
@@ -129,8 +128,17 @@ class Locations extends StatelessWidget {
                                                       ),
                                                       padding: const EdgeInsets.all(10.0),
                                                       child:
-                                                      const Text('Proceed to booking', style: TextStyle(fontSize: 16)),
+                                                      const Text('Go to locations', style: TextStyle(fontSize: 16)),
                                                     ),
+                                                    onPressed: () {
+                                                      FlushBarMessage.goodMessage(content: 'Location chosen').showFlushBar(context).then((_) {
+                                                        Navigator.pushAndRemoveUntil(
+                                                            context,
+                                                            MaterialPageRoute(builder: (BuildContext context) => Booking()),
+                                                                (Route<dynamic> route) => false
+                                                        );
+                                                      });
+                                                    },
                                                   )
                                                 ],
                                               ),
