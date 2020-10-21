@@ -27,9 +27,9 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Color(0xff2446a6),
-            title: Text(title),
-            centerTitle: true,
+          backgroundColor: Color(0xff2446a6),
+          title: Text(title),
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -59,109 +59,33 @@ class Home extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    child: ListView.builder(
-                      primary : false,
-                      // scrollDirection: Axis.horizontal,
-                      shrinkWrap : true,
-                      itemCount: locations.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          height: 500,
-                          width: double.maxFinite,
-                          child: Card(
-                            elevation: 5,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                      width: 2.0,
-                                      color: Colors.blue),
-                                ),
-                                color: Colors.white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(7),
-                                child: Stack(children: <Widget>[
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Stack(
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 20, top: 5),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  locationName(locations[index]),
-                                                ],
-                                              ),
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: <Widget>[
-                                                  locationImage(locations[index]),
-                                                ],
-                                              ),
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Wrap(
-                                                      children: [
-                                                      addOns(locations[index]),
-                                                    ],
-                                                  ),
-                                                  Spacer(),
-                                                  //cryptoChange(locations[index]),
-                                                ],
-                                              ),
-                                              Spacer(),
-                                              Row(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Spacer(),
-                                                  RaisedButton(
-                                                    textColor: Colors.white,
-                                                    padding: const EdgeInsets.all(0.0),
-                                                    child: Container(
-                                                      decoration: const BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                          colors: <Color>[
-                                                            Color(0xFF0D47A1),
-                                                            Color(0xFF1976D2),
-                                                            Color(0xFF42A5F5),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      padding: const EdgeInsets.all(10.0),
-                                                      child:
-                                                      const Text('Proceed to booking', style: TextStyle(fontSize: 16)),
-                                                    ),
-                                                    onPressed: () {
-                                                      FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
-                                                        Navigator.pushAndRemoveUntil(
-                                                            context,
-                                                            MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
-                                                                (Route<dynamic> route) => false
-                                                        );
-                                                      });
-                                                    },
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ]
-                              ),
+                      child: RaisedButton(
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(0.0),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: <Color>[
+                                Color(0xFF0D47A1),
+                                Color(0xFF1976D2),
+                                Color(0xFF42A5F5),
+                              ],
                             ),
                           ),
+                          padding: const EdgeInsets.all(10.0),
+                          child:
+                          const Text('Go to locations', style: TextStyle(fontSize: 16)),
                         ),
-                      );
-                    }),
+                        onPressed: () {
+                          FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
+                                    (Route<dynamic> route) => false
+                            );
+                          });
+                        },
+                      )
                   ),
                 ]
               ),

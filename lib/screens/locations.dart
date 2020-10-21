@@ -28,6 +28,10 @@ class Locations extends StatelessWidget {
           backgroundColor: Color(0xff2446a6),
           title: Text(title),
           centerTitle: true,
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed:() => Navigator.pop(context, false),
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(
