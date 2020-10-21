@@ -76,14 +76,21 @@ class Home extends StatelessWidget {
                         child:
                         const Text('Go to locations', style: TextStyle(fontSize: 16)),
                       ),
-                      onPressed: () {
-                        FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
-                                  (Route<dynamic> route) => false
-                          );
-                        });
+                      // onPressed: () {
+                      //   FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
+                      //     Navigator.pushAndRemoveUntil(
+                      //         context,
+                      //         MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
+                      //             (Route<dynamic> route) => false
+                      //     );
+                      //   });
+                      // },
+                      onPressed: () async {
+                        User updated = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Locations(title: 'Co\'Work'))
+                        );
                       },
                     )
                   ),

@@ -30,7 +30,7 @@ class Locations extends StatelessWidget {
           centerTitle: true,
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context, false),
+              onPressed:() => Navigator.pop(context),
           ),
         ),
         body: SingleChildScrollView(
