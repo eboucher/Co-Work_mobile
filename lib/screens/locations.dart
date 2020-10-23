@@ -1,5 +1,5 @@
-import 'package:cowork_mobile/data/crypto.dart';
-import 'package:cowork_mobile/models/user.dart';
+import 'package:cowork_mobile/models/location_model.dart';
+import 'package:cowork_mobile/models/user_model.dart';
 import 'package:cowork_mobile/data/locations_data.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:flutter/material.dart';
@@ -15,22 +15,43 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:typicons_flutter/typicons.dart';
 
-class Locations extends StatelessWidget {
+class Locations extends StatefulWidget {
 
-  final locations = LocationsData.getData;
   final String title;
-  Locations({Key key, this.title}) : super(key: key);
+  Locations({Key key, @required this.title}) : super(key: key);
+
+  @override
+  _LocationsState createState() => _LocationsState(title);
+}
+
+class _LocationsState extends State<Locations> {
+  final String _title;
+  List<Location> _locations = List<Location>();
+
+  _LocationsState(this._title);
+
+  @override
+  void initState() {
+    LocationsData.getData.forEach(
+            (element) {
+              this.setState(() {
+                this._locations.add(Location.fromJson(element));
+              });
+            });
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff2446a6),
-          title: Text(title),
+          title: Text(_title),
           centerTitle: true,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context),
+            icon: Icon(Icons.arrow_back),
+            onPressed:() => Navigator.pop(context),
           ),
         ),
         body: SingleChildScrollView(
@@ -56,7 +77,7 @@ class Locations extends StatelessWidget {
                       primary : false,
                       // scrollDirection: Axis.horizontal,
                       shrinkWrap : true,
-                      itemCount: locations.length,
+                      itemCount: _locations.length,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -87,13 +108,13 @@ class Locations extends StatelessWidget {
                                               Row(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: <Widget>[
-                                                  locationName(locations[index]),
+                                                  locationName(_locations[index]),
                                                 ],
                                               ),
                                               Row(
                                                 crossAxisAlignment: CrossAxisAlignment.center,
                                                 children: <Widget>[
-                                                  locationImage(locations[index]),
+                                                  locationImage(_locations[index]),
                                                 ],
                                               ),
                                               Row(
@@ -101,7 +122,7 @@ class Locations extends StatelessWidget {
                                                 children: <Widget>[
                                                   Wrap(
                                                     children: [
-                                                      addOns(locations[index]),
+                                                      addOns(_locations[index]),
                                                     ],
                                                   ),
                                                   Spacer(),
@@ -128,16 +149,14 @@ class Locations extends StatelessWidget {
                                                       ),
                                                       padding: const EdgeInsets.all(10.0),
                                                       child:
-                                                      const Text('Go to locations', style: TextStyle(fontSize: 16)),
+                                                      const Text('Choose location', style: TextStyle(fontSize: 16)),
                                                     ),
-                                                    onPressed: () {
-                                                      FlushBarMessage.goodMessage(content: 'Location chosen').showFlushBar(context).then((_) {
-                                                        Navigator.pushAndRemoveUntil(
-                                                            context,
-                                                            MaterialPageRoute(builder: (BuildContext context) => Booking()),
-                                                                (Route<dynamic> route) => false
-                                                        );
-                                                      });
+                                                    onPressed: () async {
+                                                      User updated = await Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => Booking(location: _locations[index]))
+                                                      );
                                                     },
                                                   )
                                                 ],
@@ -180,26 +199,15 @@ class Locations extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  title: Text('Book room'),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
-                    print('eee');
-                    Navigator.push(  context,
-                      MaterialPageRoute(builder: (context) => Booking()),);
-                    // Then close the drawer
-                    //Navigator.pop(context);
-
-                  },
-                ),
-                ListTile(
                   title: Text('My bookings'),
                   onTap: () {
                     // Update the state of the app
                     // ...
                     // Then close the drawer
-                    Navigator.push(  context,
-                      MaterialPageRoute(builder: (context) => Bookings()),);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Bookings()),
+                    );
                     //Navigator.pop(context);
                   },
                 ),
@@ -233,17 +241,18 @@ class Locations extends StatelessWidget {
     );
   }
 
+
   Widget locationName(location) {
     return Align(
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          text: '${location['name']}',
+          text: '${location.name}',
           style: TextStyle(
               fontWeight: FontWeight.bold, color: Colors.black, fontSize: 30),
           children: <TextSpan>[
             TextSpan(
-                text: '\n${location['city']}',
+                text: '\n${location.city}',
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 15,
@@ -258,7 +267,7 @@ class Locations extends StatelessWidget {
     return Align(
         child: Container(
             child: Image.asset(
-              'assets/'+'${location['avatar']}',
+              'assets/'+'${location.avatar}',
               width: 320,
               height: 180,
             )

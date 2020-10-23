@@ -1,4 +1,4 @@
-import 'package:cowork_mobile/models/user.dart';
+import 'package:cowork_mobile/models/user_model.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:cowork_mobile/screens/register.dart';
 import 'package:cowork_mobile/services/auth.dart';

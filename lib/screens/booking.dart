@@ -1,26 +1,34 @@
 import 'package:cowork_mobile/component/flush_bar_message.dart';
+import 'package:cowork_mobile/models/location_model.dart';
 import 'package:cowork_mobile/models/workspace_model.dart';
 import 'package:cowork_mobile/services/workspace_service.dart';
 import 'package:cowork_mobile/services/booking_service.dart';
 import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:time_range/time_list.dart';
 import 'package:time_range/time_range.dart';
 
 
 class Booking extends StatefulWidget {
+  final Location location;
+
+  Booking({Key key, @required this.location}) : super(key: key);
+
   @override
-  _BookingState createState() => _BookingState();
+  _BookingState createState() => _BookingState(location);
 }
 
 class _BookingState extends State<Booking> {
+
+  final Location _location;
   DateTime pickeDate;
-  List<S2Choice<OpenSpace>> options = [];
+  List<S2Choice<WorkSpace>> options = [];
   List<S2Choice<Room>> roomOption = [];
   Available available;
-  OpenSpace openSpaceSelected;
+  WorkSpace locationSelected;
   List<Room> availableRoom = [];
   SortedTool availableTool = new SortedTool();
   Room roomSelected;
@@ -60,15 +68,14 @@ class _BookingState extends State<Booking> {
 
   var foodNumber = 0.0;
 
+  _BookingState(this._location);
 
   @override
   void initState() {
     super.initState();
     //pickeDate = DateTime.now();
-    _getOpenSpace();
+    _getWorkSpace();
   }
-
-
 
   _pickDate() async {
     pickeDate = DateTime.now();
@@ -79,35 +86,42 @@ class _BookingState extends State<Booking> {
       initialDate:pickeDate,
     );
 
-
-    if(date != null){
-      setState((){
+    if(date != null) {
+      setState(() {
         pickeDate = date;
       });
-      if(openSpaceSelected!=null){
+      if(locationSelected != null) {
         print("getAvailable");
-        var availableJSON = await BookingService.getAvailable(openSpaceSelected.id, pickeDate.toString());
+        var availableJSON = await BookingService.getAvailable(locationSelected.id, pickeDate.toString());
         available = Available.convert(availableJSON);
         showFromTP = true;
         setState(() {
 
         });
-      };
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar( backgroundColor: PRIMARY_COLOR,title: Text("Reservation")),
+        appBar: AppBar( backgroundColor: PRIMARY_COLOR,title: Text("Booking")),
         body:Column(children:[
-          Flexible(
-            child:SmartSelect<OpenSpace>.single(
-                title: 'Openspace',
-                value: openSpaceSelected,
-                choiceItems: options,
-                onChange: (state) => setState(()  {openSpaceSelected = state.value;})
-            ),
+          // Flexible(
+          //   child:SmartSelect<WorkSpace>.single(
+          //       title: 'Workspace',
+          //       value: locationSelected,
+          //       choiceItems: options,
+          //       onChange: (state) => setState(()  {locationSelected = state.value;})
+          //   ),
+          // ),
+          Text(
+              "Chosen location: ${_location.name}",
+              style: GoogleFonts.openSans(
+                  color: Colors.blueGrey,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w900
+              )
           ),
           Flexible(
             child: ListTile(
@@ -192,7 +206,7 @@ class _BookingState extends State<Booking> {
                     value:pcNumber,
                     min : 0,
                     max : availableTool.laptops.length +.0,
-                    onChanged: (newRating){ setState( ()=> pcNumber = newRating);},
+                    onChanged: (newRating) { setState( ()=> pcNumber = newRating);},
                     divisions:getDivisions(availableTool.laptops),
                     label:"$pcNumber",
                   ),),
@@ -219,7 +233,7 @@ class _BookingState extends State<Booking> {
                         label:"$printerNumber",
                         max : availableTool.printers.length +.0,
                         divisions: getDivisions(availableTool.printers),
-                        onChanged: (newRating){ setState( ()=> printerNumber = newRating);}
+                        onChanged: (newRating) { setState( ()=> printerNumber = newRating);}
                         ,min:0.0)
                 ),
                 Visibility(
@@ -242,7 +256,7 @@ class _BookingState extends State<Booking> {
                     label:"$foodNumber",
                     max : 20.0,
                     divisions: 20,
-                    onChanged: (newRating){ setState( ()=> foodNumber = newRating);}
+                    onChanged: (newRating) { setState( ()=> foodNumber = newRating);}
                     ,min:0.0)
                 ,
                 FlatButton(
@@ -253,10 +267,10 @@ class _BookingState extends State<Booking> {
                   padding: EdgeInsets.all(8.0),
                   splashColor: Colors.blueAccent,
                   onPressed: !isButtonAble() ? null: () {
-                    reserve();
+                    book();
                   },
                   child: Text(
-                    "Réserver !",
+                    "Book !",
                     style: TextStyle(fontSize: 20.0),
                   ),
                 )
@@ -317,11 +331,11 @@ class _BookingState extends State<Booking> {
   }
 
 
-  _getOpenSpace() async {
-    var openSpaces = await OpenSpaceService.read();
-    for (var openSpaceJSON in openSpaces){
-      OpenSpace openSpace = OpenSpace.convert(openSpaceJSON);
-      options.add(S2Choice<OpenSpace>(value: openSpace, title: openSpace.name));
+  _getWorkSpace() async {
+    var locations = await WorkSpaceService.read();
+    for (var locationJSON in locations) {
+      WorkSpace location = WorkSpace.convert(locationJSON);
+      options.add(S2Choice<WorkSpace>(value: location, title: location.name));
     }
   }
 
@@ -331,8 +345,8 @@ class _BookingState extends State<Booking> {
     this.startHour = hour;
     this.roomSelected=null;
 
-    if(available.availableHour[hour.hour.toString()] == openSpaceSelected.rooms.length){
-      print("nothin");
+    if(available.availableHour[hour.hour.toString()] == locationSelected.rooms.length) {
+      print("nothing");
       noHourAvailable = true;
       showToTP=false;
       setState(() =>{});
@@ -354,7 +368,7 @@ class _BookingState extends State<Booking> {
     this.roomOption = [];
     this.endHour = hour;
     availableRoom = this.getAvailableRoom();
-    for (var room in availableRoom){
+    for (var room in availableRoom) {
       roomOption.add(S2Choice<Room>(value: room, title: room.name));
     }
     this.showRoomSelection = true;
@@ -366,11 +380,11 @@ class _BookingState extends State<Booking> {
     });
   }
 
-  findNextHourAvailable(start,availableHour) {
+  findNextHourAvailable(start, availableHour) {
     start++;
-    while(start<21){
+    while(start<21) {
 
-      if(available.availableHour[start.toString()] == openSpaceSelected.rooms.length){
+      if(available.availableHour[start.toString()] == locationSelected.rooms.length) {
         return start;
       }
       start++;
@@ -378,9 +392,9 @@ class _BookingState extends State<Booking> {
     return 21;
   }
 
-  List<Room> getAvailableRoom(){
+  List<Room> getAvailableRoom() {
     List<Room> rooms = [];
-    for (Room room in this.openSpaceSelected.rooms){
+    for (Room room in this.locationSelected.rooms) {
       if(this.isRoomAvailable(room.id))
       {
         rooms.add(room);
@@ -390,19 +404,30 @@ class _BookingState extends State<Booking> {
   }
 
   bool isRoomAvailable(String id) {
-    DateTime start = new DateTime(this.pickeDate.year,this.pickeDate.month,this.pickeDate.day,this.startHour.hour,1);
-    DateTime end = new DateTime(this.pickeDate.year,this.pickeDate.month,this.pickeDate.day,this.endHour.hour);
+    DateTime start = new DateTime(
+        this.pickeDate.year,
+        this.pickeDate.month,
+        this.pickeDate.day,
+        this.startHour.hour,
+        1
+    );
+    DateTime end = new DateTime(
+        this.pickeDate.year,
+        this.pickeDate.month,
+        this.pickeDate.day,
+        this.endHour.hour
+    );
 
-    for (Reservation reservation in  this.available.reservations){
+    for (var booking in this.available.bookings) {
 
-      if (reservation.room.id == id ){
-        if (this.isDateOverLapping(reservation.start, reservation.end, start, end))
+      if (booking.room.id == id ) {
+        if (this.isDateOverLapping(booking.start, booking.end, start, end))
         {
           print(start.toString());
           print(end.toString());
-          print("comparewith old");
-          print(reservation.start.toString());
-          print(reservation.end.toString());
+          print("compare with old");
+          print(booking.start.toString());
+          print(booking.end.toString());
 
           print("Overlapping");
           return false;
@@ -413,9 +438,9 @@ class _BookingState extends State<Booking> {
   }
 
 
-  List<Tool> getAvailableTool(){
+  List<Tool> getAvailableTool() {
     List<Tool> tools = [];
-    for (Tool tool in this.openSpaceSelected.tools){
+    for (Tool tool in this.locationSelected.tools) {
       if(this.isToolAvailable(tool.id))
       {
         tools.add(tool);
@@ -428,64 +453,64 @@ class _BookingState extends State<Booking> {
     DateTime start = new DateTime(this.pickeDate.year,this.pickeDate.month,this.pickeDate.day,this.startHour.hour,1);
     DateTime end = new DateTime(this.pickeDate.year,this.pickeDate.month,this.pickeDate.day,this.endHour.hour);
 
-    for (Reservation reservation in  this.available.reservations){
-      for(Tool tool in reservation.tools){
-        if (tool.id == id ){
-          if (this.isDateOverLapping(reservation.start, reservation.end, start, end))
+    this.available.bookings.forEach((booking) {
+      for(Tool tool in booking.tools) {
+        if (tool.id == id ) {
+          if (this.isDateOverLapping(booking.start, booking.end, start, end))
           {
             return false;
           }
         }
       }
-    }
-    return true;
+      return true;
+    });
   }
 
-  isDateOverLapping(DateTime startDate1, DateTime endDate1, DateTime startDate2,  DateTime endDate2){
+  isDateOverLapping(DateTime startDate1, DateTime endDate1, DateTime startDate2,  DateTime endDate2) {
     return (startDate1.isBefore(endDate2) || startDate1.isAtSameMomentAs(endDate2) ) && (endDate1.isAfter(startDate2) || endDate1.isAtSameMomentAs(startDate2) );
   }
-  getDivisions(List<Object> list){
-    if(list.length<=0){
+  getDivisions(List<Object> list) {
+    if(list.length<=0) {
       return 1;
     }
     return list.length;
   }
 
-  reserve() async {
+  book() async {
     DateTime start = new DateTime(this.pickeDate.year,this.pickeDate.month,this.pickeDate.day,this.startHour.hour);
     DateTime end = new DateTime(this.pickeDate.year,this.pickeDate.month,this.pickeDate.day,this.endHour.hour);
-    ReservationCreation reservationCreation = new ReservationCreation();
-    reservationCreation.room = roomSelected.id;
-    reservationCreation.start = start.toString();
-    reservationCreation.end = end.toString();
-    reservationCreation.food = (foodNumber).toInt();
-    reservationCreation.tools = pickSomeToolToReserve((pcNumber).toInt(),(printerNumber).toInt(),availableTool);
+    BookingCreation bookingCreation = new BookingCreation();
+    bookingCreation.room = roomSelected.id;
+    bookingCreation.start = start.toString();
+    bookingCreation.end = end.toString();
+    bookingCreation.food = (foodNumber).toInt();
+    bookingCreation.tools = pickSomeToolToBook((pcNumber).toInt(),(printerNumber).toInt(),availableTool);
     try {
-      await BookingService.create(reservationCreation.toJson());
+      await BookingService.create(bookingCreation.toJson());
       Navigator.pop(context);
       Navigator.pop(context);
-      FlushBarMessage.goodMessage(content: "Reservation effectué").showFlushBar(context);
+      FlushBarMessage.goodMessage(content: "Booking done").showFlushBar(context);
 
-    }catch  (exception) {
+    } catch  (exception) {
       print(exception);
-      FlushBarMessage.errorMessage(content: "Erreur lors de l'inscription").showFlushBar(context);
+      FlushBarMessage.errorMessage(content: "Error during registration").showFlushBar(context);
     }
   }
 
 
-  pickSomeToolToReserve(int pcNumber, int printerNumber,SortedTool available){
+  pickSomeToolToBook(int pcNumber, int printerNumber,SortedTool available) {
     List<String> res = [];
     int pcRetrieve = 0;
     int  printerRetrieve = 0;
-    for (Tool laptop in available.laptops){
-      if( pcRetrieve == pcNumber){
+    for (Tool laptop in available.laptops) {
+      if( pcRetrieve == pcNumber) {
         break;
       }
       res.add(laptop.id);
     }
 
-    for (Tool printer in available.printers){
-      if( printerRetrieve == printerNumber){
+    for (Tool printer in available.printers) {
+      if( printerRetrieve == printerNumber) {
         break;
       }
       res.add(printer.id);
@@ -494,16 +519,16 @@ class _BookingState extends State<Booking> {
   }
 
 
-  isButtonAble(){
-    if(null==roomSelected){
+  isButtonAble() {
+    if(null==roomSelected) {
       return false;
     }
     return true;
   }
   updateGetAvailable() async {
-    if(openSpaceSelected!= null && pickeDate != null){
+    if(locationSelected!= null && pickeDate != null) {
       print("getAvailable");
-      var availableJSON = await BookingService.getAvailable(openSpaceSelected.id, pickeDate.toString());
+      var availableJSON = await BookingService.getAvailable(locationSelected.id, pickeDate.toString());
       available = Available.convert(availableJSON);
       showFromTP = true;
     }
@@ -512,8 +537,8 @@ class _BookingState extends State<Booking> {
     });
   }
 
-  getResDate(){
-    if(pickeDate != null){
+  getResDate() {
+    if(pickeDate != null) {
       return '${pickeDate.day} ${pickeDate.month} ${pickeDate.year}';
     }
     return '';

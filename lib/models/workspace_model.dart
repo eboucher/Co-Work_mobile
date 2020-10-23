@@ -2,15 +2,15 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 
-class OpenSpace {
+class WorkSpace {
   String id;
   String description;
   String name;
   List<Room> rooms;
   List<Tool> tools;
 
-  static convert(Map map){
-     OpenSpace openSpace = new OpenSpace();
+  static convert(Map map) {
+     WorkSpace openSpace = new WorkSpace();
      openSpace.id = map['id'];
      openSpace.description = map['description'];
      openSpace.name = map['name'];
@@ -19,20 +19,20 @@ class OpenSpace {
      return openSpace;
   }
 
-  static returnByID(List<OpenSpace> openSpaces,String id){
-    for (OpenSpace openSpace in openSpaces){
-      if(id==openSpace.id){
+  static returnByID(List<WorkSpace> openSpaces,String id) {
+    for (WorkSpace openSpace in openSpaces) {
+      if (id==openSpace.id) {
         return openSpace;
       }
     }
   }
 }
 
-class OpenSpaceId{
+class WorkSpaceId{
   String id;
   String name;
-  static dynamic convert(Map map){
-    OpenSpaceId openSpace = new OpenSpaceId();
+  static dynamic convert(Map map) {
+    WorkSpaceId openSpace = new WorkSpaceId();
     openSpace.id = map['id'];
     openSpace.name = map['name'];
     return openSpace;
@@ -43,14 +43,14 @@ class Room {
   String id;
   String description;
   String name;
-  OpenSpaceId openSpace;
+  WorkSpaceId openSpace;
   bool available = true;
-  static dynamic convert(Map map){
+  static dynamic convert(Map map) {
     Room room = new Room();
     room.id = map['id'];
     room.description = map['description'];
     room.name = map['name'];
-    room.openSpace = OpenSpaceId.convert(map['openSpace']);
+    room.openSpace = WorkSpaceId.convert(map['openSpace']);
     return room;
   }
 }
@@ -66,7 +66,7 @@ class Tool {
   String name;
   ToolType type;
 
-  static dynamic convert(Map map){
+  static dynamic convert(Map map) {
     Tool openSpace = new Tool();
     openSpace.id = map['id'];
     openSpace.name = map['name'];
@@ -77,7 +77,7 @@ class Tool {
 }
 
 
-class Reservation {
+class Booking {
   String id;
   DateTime start;
   DateTime end;
@@ -86,62 +86,59 @@ class Reservation {
   List<Tool> tools;
   String user;
 
-  static dynamic convert(Map map){
-    Reservation reservation = new Reservation();
-    reservation.id = map['id'];
-    reservation.start = DateTime.parse(map['start']);
-    reservation.end = DateTime.parse(map['end']);
-    reservation.food = map['food'];
-    reservation.room = Room.convert(map['room']);
-    reservation.tools =  new List<Tool>.from(Utilities.convertArray(map['tools'],Tool.convert));
-    reservation.user = map['user']['id'];
-    return reservation;
+  static dynamic convert(Map map) {
+    Booking booking = new Booking();
+    booking.id = map['id'];
+    booking.start = DateTime.parse(map['start']);
+    booking.end = DateTime.parse(map['end']);
+    booking.food = map['food'];
+    booking.room = Room.convert(map['room']);
+    booking.tools =  new List<Tool>.from(Utilities.convertArray(map['tools'],Tool.convert));
+    booking.user = map['user']['id'];
+    return booking;
   }
-
-
 }
 
 class Available {
-  List<Reservation> reservations;
+  List<Booking> bookings;
   var availableHour;
 
-  static dynamic convert(Map map){
+  static dynamic convert(Map map) {
     Available available = new Available();
-    available.reservations =  new List<Reservation>.from(Utilities.convertArray(map['reservations'],Reservation.convert));
+    available.bookings =  new List<Booking>.from(Utilities.convertArray(map['bookings'], Booking.convert));
     available.availableHour = map['availableHour'];
     return available;
   }
-
 }
 
-class SortedTool{
-    List<Tool> laptops = [];
-    List<Tool> printers = [];
-    List<Tool> others = [];
+class SortedTool {
+  List<Tool> laptops = [];
+  List<Tool> printers = [];
+  List<Tool> others = [];
 
-    static dynamic fromListTool(List<Tool> tools){
-      SortedTool res = new SortedTool();
-      for(Tool tool in tools){
-        if(tool.type == ToolType.LAPTOP){
-          res.laptops.add(tool);
-        }else if(tool.type == ToolType.PRINTER){
-          res.printers.add(tool);
-        }else if(tool.type == ToolType.TOOL){
-          res.others.add(tool);
-        }
+  static dynamic fromListTool(List<Tool> tools) {
+    SortedTool res = new SortedTool();
+    for(Tool tool in tools) {
+      if(tool.type == ToolType.LAPTOP) {
+        res.laptops.add(tool);
+      } else if(tool.type == ToolType.PRINTER) {
+        res.printers.add(tool);
+      } else if(tool.type == ToolType.TOOL) {
+        res.others.add(tool);
       }
-      return res;
     }
+    return res;
+  }
 }
 
-class ReservationCreation {
+class BookingCreation {
   String start;
   String end;
   int food;
   String room;
   List<String> tools;
 
-  toJson(){
+  toJson() {
     Map<String,dynamic> json={'start':start,'end':end,'food':food,'room':room,'tools':tools};
     return json;
   }

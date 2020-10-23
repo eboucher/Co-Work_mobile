@@ -6,7 +6,7 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:http/http.dart' as http;
 String base ="openSpace";
 
-class OpenSpaceService {
+class WorkSpaceService {
 
 
   static dynamic read() async {

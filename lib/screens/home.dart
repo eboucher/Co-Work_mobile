@@ -1,6 +1,5 @@
-import 'package:cowork_mobile/data/crypto.dart';
 import 'package:cowork_mobile/data/locations_data.dart';
-import 'package:cowork_mobile/models/user.dart';
+import 'package:cowork_mobile/models/user_model.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -76,15 +75,6 @@ class Home extends StatelessWidget {
                         child:
                         const Text('Go to locations', style: TextStyle(fontSize: 16)),
                       ),
-                      // onPressed: () {
-                      //   FlushBarMessage.goodMessage(content: 'I\'m as good as dead.').showFlushBar(context).then((_) {
-                      //     Navigator.pushAndRemoveUntil(
-                      //         context,
-                      //         MaterialPageRoute(builder: (BuildContext context) => Locations(title: 'Co\'Work')),
-                      //             (Route<dynamic> route) => false
-                      //     );
-                      //   });
-                      // },
                       onPressed: () async {
                         User updated = await Navigator.push(
                             context,
@@ -124,7 +114,7 @@ class Home extends StatelessWidget {
                     // ...
                     print('eee');
                     Navigator.push(  context,
-                      MaterialPageRoute(builder: (context) => Booking()),);
+                      MaterialPageRoute(builder: (context) => Locations()),);
                     // Then close the drawer
                     //Navigator.pop(context);
 
