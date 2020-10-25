@@ -37,23 +37,27 @@ class _BookingState extends State<Booking> {
   bool showToTP = false;
   bool showRoomSelection = false;
   bool noHourAvailable = false;
-  var hourArray = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00',
-    '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+
+  var hourArray = [
+    '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00',
+    '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'
+  ];
+
   var availableHour = {
-    8:{"available":false},
-    9:{"available":false},
-    10:{"available":false},
-    11:{"available":false},
-    12:{"available":false},
-    13:{"available":false},
-    14:{"available":false},
-    15:{"available":false},
-    16:{"available":false},
-    17:{"available":false},
-    18:{"available":false},
-    19:{"available":false},
-    20:{"available":false},
-    21:{"available":false}
+    8: { "available": false },
+    9: { "available": false },
+    10: { "available": false },
+    11: { "available": false },
+    12: { "available": false },
+    13: { "available": false },
+    14: { "available": false },
+    15: { "available": false },
+    16: { "available": false },
+    17: { "available": false },
+    18: { "available": false },
+    19: { "available": false },
+    20: { "available": false },
+    21: { "available": false }
   };
 
   var pcNumber = 0.0;
@@ -93,11 +97,13 @@ class _BookingState extends State<Booking> {
       });
       if(locationSelected != null) {
         print("getAvailable");
-        var availableJSON = await BookingService.getAvailable(locationSelected.id, pickeDate.toString());
+        var availableJSON = await BookingService.getAvailable(
+            locationSelected.id,
+            pickeDate.toString()
+        );
         available = Available.convert(availableJSON);
         showFromTP = true;
         setState(() {
-
         });
       }
     }
@@ -106,181 +112,262 @@ class _BookingState extends State<Booking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            backgroundColor: PRIMARY_COLOR,
-            title: Text("Booking")
-        ),
-        body:Column(
-            children:[
-              Text(
-                  "Chosen location: ${_location.name}",
-                  style: GoogleFonts.openSans(
-                      color: Colors.blueGrey,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w900
-                  )
-              ),
 
-              Flexible(
-                child: ListTile(
-                  title: Text( "Date: "+ getResDate()),
-                  trailing:Icon(Icons.keyboard_arrow_down),
-                  onTap: _pickDate,
-                ),
+      appBar: AppBar(
+          backgroundColor: PRIMARY_COLOR,
+          title: Text("Booking")
+      ),
 
-              ),
+      body: Column(
+        children:[
 
-              Flexible(
-                  child:Column(children:[
-                    Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text('Start date', style: TextStyle(fontSize: 18, color: Colors.grey),),
+          Text(
+            "Chosen location: ${_location.name}",
+            style: GoogleFonts.openSans(
+              color: Colors.blueGrey,
+              fontSize: 12,
+              fontWeight: FontWeight.w900
+            )
+          ),
+
+          Flexible(
+            child: ListTile(
+              title: Text( "Date: "+ getResDate()),
+              trailing:Icon(Icons.keyboard_arrow_down),
+              onTap: _pickDate,
+            ),
+          ),
+
+          Flexible(
+            child: Column(
+              children:[
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Start date',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey
                     ),
-                    SizedBox(height: 8),
-                    TimeList(
-                      firstTime: fromStartTP,
-                      lastTime: fromEndTP,
-                      timeStep: 60,
-                      padding: 20,
-                      onHourSelected: _startHourChanged,
-                      borderColor: Colors.black54,
-                      activeBorderColor: Colors.orange,
-                      backgroundColor: Colors.transparent,
-                      activeBackgroundColor: Colors.orange,
-                      textStyle: TextStyle(fontWeight: FontWeight.normal, color: Colors.black87),
-                      activeTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                    )
-                  ])),
+                  ),
+                ),
+                SizedBox(height: 8),
+                TimeList(
+                  firstTime: fromStartTP,
+                  lastTime: fromEndTP,
+                  timeStep: 60,
+                  padding: 20,
+                  onHourSelected: _startHourChanged,
+                  borderColor: Colors.black54,
+                  activeBorderColor: Colors.orange,
+                  backgroundColor: Colors.transparent,
+                  activeBackgroundColor: Colors.orange,
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black87
+                  ),
+                  activeTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                  ),
+                )
+              ]
+            )
+          ),
 
-              // RaisedButton(
-              //   child: Text('Show Material Dialog'),
-              //   onPressed: _showMaterialDialog,
-              // ),
+          RaisedButton(
+            child: Text('Choose start time'),
+            onPressed: _chooseStartTime,
+          ),
+
+          Visibility(
+            visible: noHourAvailable,
+            child:Text(
+              "There are no available rooms for this time",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+
+          Visibility(
+              visible: showToTP,
+              child: Column(
+                children:[
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'End date',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                TimeList(
+                  firstTime: toStartTP,
+                  lastTime: toEndTP,
+                  timeStep: 60,
+                  padding: 20,
+                  onHourSelected: _endHourChanged,
+                  borderColor: Colors.black54,
+                  activeBorderColor: Colors.orange,
+                  backgroundColor: Colors.transparent,
+                  activeBackgroundColor: Colors.orange,
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black87
+                  ),
+                  activeTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white
+                  ),
+                ),
+              ]
+            )
+          ),
+
+          Visibility(
+            visible:showRoomSelection,
+            child: Column(
+              children:[
+
+              SmartSelect<Room>.single(
+                title: 'Room',
+                value: roomSelected,
+                choiceItems: roomOption,
+                onChange: (state) =>
+                    setState( () => roomSelected = state.value )
+              ),
+              Icon(
+                Icons.laptop,
+                color: Colors.black,
+                size: 48.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              ),
 
               Visibility(
-                visible:noHourAvailable ,
-                child:Text(
-                  "There are no available rooms for this time",
+                visible: availableTool.laptops.length > 0,
+                child: Slider(
+                  value:pcNumber,
+                  min : 0,
+                  max : availableTool.laptops.length +.0,
+                  onChanged: (newRating) {
+                    setState( ()=> pcNumber = newRating );
+                  },
+                  divisions:getDivisions(availableTool.laptops),
+                  label:"$pcNumber",
+                ),
+              ),
+
+              Visibility(
+                visible: availableTool.laptops.length == 0 ,
+                child: Text(
+                  "There are no more computers available",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold),
-                ),
+                )
+              ),
+              Icon(
+                Icons.local_printshop,
+                color: Colors.black,
+                size: 48.0,
+                semanticLabel: 'Text to announce in accessibility modes',
               ),
 
               Visibility(
-                  visible:showToTP ,
-                  child:Column(children:[
-                    Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text('End date', style: TextStyle(fontSize: 18, color: Colors.grey),),
-                    ),
-                    SizedBox(height: 8),
-                    TimeList(
-                      firstTime: toStartTP,
-                      lastTime: toEndTP,
-                      timeStep: 60,
-                      padding: 20,
-                      onHourSelected: _endHourChanged,
-                      borderColor: Colors.black54,
-                      activeBorderColor: Colors.orange,
-                      backgroundColor: Colors.transparent,
-                      activeBackgroundColor: Colors.orange,
-                      textStyle: TextStyle(fontWeight: FontWeight.normal, color: Colors.black87),
-                      activeTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
-                  ])),
+                visible: availableTool.printers.length>0,
+                child:Slider(
+                    value:printerNumber,
+                    label:"$printerNumber",
+                    max : availableTool.printers.length +.0,
+                    divisions: getDivisions(availableTool.printers),
+                    onChanged: (newRating) {
+                      setState( ()=> printerNumber = newRating);
+                    },
+                    min:0.0
+                )
+              ),
 
               Visibility(
-                  visible:showRoomSelection,
-                  child: Column(children:[
+                visible: availableTool.printers.length == 0,
+                child: Text(
+                  "There are no more printers available",
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ),
 
-                    SmartSelect<Room>.single(
-                        title: 'Room',
-                        value: roomSelected,
-                        choiceItems: roomOption,
-                        onChange: (state) => setState(() => roomSelected = state.value)
-                    ),
-                    Icon(
-                      Icons.laptop,
-                      color: Colors.black,
-                      size: 48.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
-                    Visibility(
-                      visible: availableTool.laptops.length > 0,
-                      child: Slider(
-                        value:pcNumber,
-                        min : 0,
-                        max : availableTool.laptops.length +.0,
-                        onChanged: (newRating) { setState( ()=> pcNumber = newRating);},
-                        divisions:getDivisions(availableTool.laptops),
-                        label:"$pcNumber",
-                      ),),
-                    Visibility(
-                        visible: availableTool.laptops.length == 0 ,
-                        child: Text(
-                          "There are no more computers available",
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
-                    ),
-                    Icon(
-                      Icons.local_printshop,
-                      color: Colors.black,
-                      size: 48.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
+              Icon(
+                Icons.fastfood,
+                color: Colors.black,
+                size: 48.0,
+                semanticLabel: 'Text to announce in accessibility modes',
+              ),
 
-                    Visibility(
-                        visible: availableTool.printers.length>0,
-                        child:Slider(
-                            value:printerNumber,
-                            label:"$printerNumber",
-                            max : availableTool.printers.length +.0,
-                            divisions: getDivisions(availableTool.printers),
-                            onChanged: (newRating) { setState( ()=> printerNumber = newRating);}
-                            ,min:0.0)
-                    ),
-                    Visibility(
-                        visible:availableTool.printers.length==0 ,
-                        child:Text(
-                          "There are no more printers available",
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
-                    ),
-                    Icon(
-                      Icons.fastfood,
-                      color: Colors.black,
-                      size: 48.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
-                    Slider(
-                        value:foodNumber,
-                        label:"$foodNumber",
-                        max : 20.0,
-                        divisions: 20,
-                        onChanged: (newRating) { setState( ()=> foodNumber = newRating);}
-                        ,min:0.0)
-                    ,
-                  ] )
-              )
-
-        ]
-        ),
-
+              Slider(
+                value: foodNumber,
+                label: "$foodNumber",
+                max : 20.0,
+                divisions: 20,
+                onChanged: (newRating) {
+                  setState( () => foodNumber = newRating );
+                },
+                min:0.0
+              ),
+            ]
+          )
+        )
+      ]
+    ),
         drawer: CustonDrawer()
     );
   }
 
-  _showMaterialDialog() {
+  _chooseStartTime() {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
           title: new Text("Material Dialog"),
-          content: new Text("Hey! I'm Coflutter!"),
+          content: Column(
+              children:[
+                Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    'Start date',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8),
+                TimeList(
+                  firstTime: fromStartTP,
+                  lastTime: fromEndTP,
+                  timeStep: 60,
+                  padding: 20,
+                  onHourSelected: _startHourChanged,
+                  borderColor: Colors.black54,
+                  activeBorderColor: Colors.orange,
+                  backgroundColor: Colors.transparent,
+                  activeBackgroundColor: Colors.orange,
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black87
+                  ),
+                  activeTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                  ),
+                )
+              ]
+          ),
           actions: <Widget>[
             FlatButton(
               child: Text('Close me!'),
@@ -289,7 +376,8 @@ class _BookingState extends State<Booking> {
               },
             )
           ],
-        ));
+        )
+    );
   }
 
 
@@ -305,7 +393,7 @@ class _BookingState extends State<Booking> {
     noHourAvailable = false;
     this.showRoomSelection = false;
     this.startHour = hour;
-    this.roomSelected=null;
+    this.roomSelected = null;
 
     if(available.availableHour[hour.hour.toString()] == locationSelected.rooms.length) {
       print("nothing");
@@ -314,15 +402,19 @@ class _BookingState extends State<Booking> {
       setState(() =>{});
       return;
     }
-    showToTP=true;
-    var possibleEnd =  findNextHourAvailable(hour.hour,available.availableHour);
+
+    showToTP = true;
+    var possibleEnd = findNextHourAvailable(
+        hour.hour,
+        available.availableHour
+    );
 
     toStartTP = hour.add(minutes: 60);
     toEndTP = TimeOfDay(hour: possibleEnd+1, minute: 00);
 
     print("start"+toStartTP.toString());
     print("end"+toEndTP.toString());
-    setState(() =>{});
+    setState(() => {});
   }
 
   void _endHourChanged(TimeOfDay hour) async {
@@ -330,22 +422,24 @@ class _BookingState extends State<Booking> {
     this.roomOption = [];
     this.endHour = hour;
     availableRoom = this.getAvailableRoom();
-    for (var room in availableRoom) {
-      roomOption.add(S2Choice<Room>(value: room, title: room.name));
+
+    for(var room in availableRoom) {
+      roomOption.add(S2Choice<Room>(
+          value: room,
+          title: room.name)
+      );
     }
+
     this.showRoomSelection = true;
     availableTool = SortedTool.fromListTool(this.getAvailableTool());
     print(availableTool.laptops.length);
     print(availableTool.printers.length);
-    setState(() {
-
-    });
+    setState(() => {});
   }
 
   findNextHourAvailable(start, availableHour) {
     start++;
-    while(start<21) {
-
+    while(start < 21) {
       if(available.availableHour[start.toString()] == locationSelected.rooms.length) {
         return start;
       }
@@ -357,8 +451,7 @@ class _BookingState extends State<Booking> {
   List<Room> getAvailableRoom() {
     List<Room> rooms = [];
     for (Room room in this.locationSelected.rooms) {
-      if(this.isRoomAvailable(room.id))
-      {
+      if(this.isRoomAvailable(room.id)) {
         rooms.add(room);
       }
     }
@@ -403,8 +496,7 @@ class _BookingState extends State<Booking> {
   List<Tool> getAvailableTool() {
     List<Tool> tools = [];
     for (Tool tool in this.locationSelected.tools) {
-      if(this.isToolAvailable(tool.id))
-      {
+      if(this.isToolAvailable(tool.id)) {
         tools.add(tool);
       }
     }
@@ -429,8 +521,7 @@ class _BookingState extends State<Booking> {
     this.available.bookings.forEach((booking) {
       for(Tool tool in booking.tools) {
         if (tool.id == id ) {
-          if (this.isDateOverLapping(booking.start, booking.end, start, end))
-          {
+          if (this.isDateOverLapping(booking.start, booking.end, start, end)) {
             return false;
           }
         }
@@ -439,12 +530,15 @@ class _BookingState extends State<Booking> {
     });
   }
 
-  isDateOverLapping(DateTime startDate1, DateTime endDate1, DateTime startDate2,  DateTime endDate2) {
+  isDateOverLapping(DateTime startDate1, DateTime endDate1,
+      DateTime startDate2, DateTime endDate2)
+  {
     return (startDate1.isBefore(endDate2) || startDate1.isAtSameMomentAs(endDate2) )
         && (endDate1.isAfter(startDate2) || endDate1.isAtSameMomentAs(startDate2) );
   }
+
   getDivisions(List<Object> list) {
-    if(list.length<=0) {
+    if(list.length <= 0) {
       return 1;
     }
     return list.length;
@@ -457,50 +551,51 @@ class _BookingState extends State<Booking> {
         this.pickeDate.day,
         this.startHour.hour
     );
+
     DateTime end = new DateTime(
         this.pickeDate.year,
         this.pickeDate.month,
         this.pickeDate.day,
         this.endHour.hour
     );
-    BookingCreation bookingCreation = new BookingCreation();
-    bookingCreation.room = roomSelected.id;
-    bookingCreation.start = start.toString();
-    bookingCreation.end = end.toString();
-    bookingCreation.food = (foodNumber).toInt();
-    bookingCreation.tools = pickSomeToolToBook(
+
+    BookingToJson bookingToJson = new BookingToJson();
+    bookingToJson.room = roomSelected.id;
+    bookingToJson.start = start.toString();
+    bookingToJson.end = end.toString();
+    bookingToJson.food = (foodNumber).toInt();
+    bookingToJson.tools = pickSomeToolToBook(
         (pcNumber).toInt(),
         (printerNumber).toInt(),
         availableTool
     );
+
     try {
-      await BookingService.create(bookingCreation.toJson());
+      await BookingService.create(bookingToJson.toJson());
       Navigator.pop(context);
       Navigator.pop(context);
       FlushBarMessage.goodMessage(content: "Booking done").showFlushBar(context);
 
-    } catch  (exception) {
+    } catch (exception) {
       print(exception);
       FlushBarMessage.errorMessage(content: "Error during registration").showFlushBar(context);
     }
   }
 
 
-  pickSomeToolToBook(int pcNumber, int printerNumber,SortedTool available) {
+  pickSomeToolToBook(int pcNumber, int printerNumber, SortedTool available) {
     List<String> res = [];
     int pcRetrieve = 0;
     int  printerRetrieve = 0;
     for (Tool laptop in available.laptops) {
-      if( pcRetrieve == pcNumber) {
+      if( pcRetrieve == pcNumber)
         break;
-      }
       res.add(laptop.id);
     }
 
     for (Tool printer in available.printers) {
-      if( printerRetrieve == printerNumber) {
+      if(printerRetrieve == printerNumber)
         break;
-      }
       res.add(printer.id);
     }
     return res;
@@ -508,27 +603,27 @@ class _BookingState extends State<Booking> {
 
 
   isButtonAble() {
-    if(null==roomSelected) {
+    if(null == roomSelected)
       return false;
-    }
     return true;
   }
   updateGetAvailable() async {
     if(locationSelected!= null && pickeDate != null) {
       print("getAvailable");
-      var availableJSON = await BookingService.getAvailable(locationSelected.id, pickeDate.toString());
+      var availableJSON = await BookingService.getAvailable(
+          locationSelected.id,
+          pickeDate.toString()
+      );
       available = Available.convert(availableJSON);
       showFromTP = true;
     }
     setState(() {
-
     });
   }
 
   getResDate() {
-    if(pickeDate != null) {
+    if(pickeDate != null)
       return '${pickeDate.day} ${pickeDate.month} ${pickeDate.year}';
-    }
     return '';
   }
 }

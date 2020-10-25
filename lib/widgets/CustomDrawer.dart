@@ -22,6 +22,7 @@ class _CustonDrawerState extends State<CustonDrawer> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
+
             Container(
               height: 85.0,
               child:DrawerHeader(
@@ -31,6 +32,7 @@ class _CustonDrawerState extends State<CustonDrawer> {
                 ),
               ),
             ),
+
             ListTile(
               title: Text('Book room'),
               onTap: () {
@@ -39,13 +41,22 @@ class _CustonDrawerState extends State<CustonDrawer> {
                 print('eee');
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Locations()),
+                  MaterialPageRoute(
+                      builder: (context) => Locations()
+                  ),
                 );
                 // Then close the drawer
                 //Navigator.pop(context);
-
               },
             ),
+
+            ListTile(
+              title: Text('Home'),
+              onTap: () {
+                print("To be continued");
+              },
+            ),
+
             ListTile(
               title: Text('My bookings'),
               onTap: () {
@@ -53,10 +64,14 @@ class _CustonDrawerState extends State<CustonDrawer> {
                 // ...
                 // Then close the drawer
                 Navigator.push(  context,
-                  MaterialPageRoute(builder: (context) => Bookings()),);
+                  MaterialPageRoute(
+                      builder: (context) => Bookings()
+                  ),
+                );
                 //Navigator.pop(context);
               },
             ),
+
             ListTile(
               title: Text('My account'),
               onTap: () {
@@ -71,10 +86,13 @@ class _CustonDrawerState extends State<CustonDrawer> {
                 onTap: () async {
                   await storage.write(key: "token", value: "");
                   //print("storage.read() = " + await storage.read(key: "token"));
-                  FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
+                  FlushBarMessage.goodMessage(
+                      content: "You logged out of We'Work").showFlushBar(context).then((_) {
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (BuildContext context) => Login()),
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => Login()
+                        ),
                             (Route<dynamic> route) => false
                     );
                   });

@@ -131,7 +131,7 @@ class SortedTool {
   }
 }
 
-class BookingCreation {
+class BookingToJson {
   String start;
   String end;
   int food;
@@ -140,11 +140,11 @@ class BookingCreation {
 
   toJson() {
     Map<String,dynamic> json = {
-      'start':start,
-      'end':end,
-      'food':food,
-      'room':room,
-      'tools':tools
+      'start': start,
+      'end': end,
+      'food': food,
+      'room': room,
+      'tools': tools
     };
     return json;
   }

@@ -109,7 +109,7 @@ class _LoginState extends State<Login> {
         FlushBarMessage.goodMessage(content: 'Successful connection').showFlushBar(context).then((_) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => Home(title: 'Co\'Work', user: User.fromJson(user))),
+            MaterialPageRoute(builder: (BuildContext context) => Home(user: User.fromJson(user))),
             (Route<dynamic> route) => false
           );
         });

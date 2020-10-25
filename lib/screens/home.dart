@@ -1,4 +1,5 @@
 import 'package:cowork_mobile/data/locations_data.dart';
+import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:cowork_mobile/models/user_model.dart';
 import 'package:cowork_mobile/widgets/CustomDrawer.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +11,19 @@ import 'package:google_fonts/google_fonts.dart';
 class Home extends StatelessWidget {
 
   final locations = LocationsData.getData;
-  final String title;
   final User user;
-  Home({Key key, this.title, this.user}) : super(key: key);
+  Home({Key key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: AppBar(
           backgroundColor: Color(0xff2446a6),
-          title: Text(title),
+          title: Text(APP_TITLE),
           centerTitle: true,
         ),
+
         body: SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
