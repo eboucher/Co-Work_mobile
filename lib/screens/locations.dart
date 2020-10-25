@@ -2,6 +2,7 @@ import 'package:cowork_mobile/models/location_model.dart';
 import 'package:cowork_mobile/models/user_model.dart';
 import 'package:cowork_mobile/data/locations_data.dart';
 import 'package:cowork_mobile/tools/flush_bar_message.dart';
+import 'package:cowork_mobile/widgets/CustomDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cowork_mobile/screens/booking.dart';
@@ -16,19 +17,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:typicons_flutter/typicons.dart';
 
 class Locations extends StatefulWidget {
-
-  final String title;
-  Locations({Key key, @required this.title}) : super(key: key);
+  Locations({Key key}) : super(key: key);
 
   @override
-  _LocationsState createState() => _LocationsState(title);
+  _LocationsState createState() => _LocationsState();
 }
 
 class _LocationsState extends State<Locations> {
-  final String _title;
   List<Location> _locations = List<Location>();
-
-  _LocationsState(this._title);
 
   @override
   void initState() {
@@ -47,7 +43,7 @@ class _LocationsState extends State<Locations> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xff2446a6),
-          title: Text(_title),
+          title: Text(APP_TITLE),
           centerTitle: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -179,65 +175,7 @@ class _LocationsState extends State<Locations> {
           ),
         ),
 
-        drawer: Container(
-          width:200,
-          child:Drawer(
-            // Add a ListView to the drawer. This ensures the user can scroll
-            // through the options in the drawer if there isn't enough vertical
-            // space to fit everything.
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                Container(
-                  height: 85.0,
-                  child:DrawerHeader(
-                    child: Text('Co\'Work'),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF283593),
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text('My bookings'),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
-                    // Then close the drawer
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Bookings()),
-                    );
-                    //Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text('My account'),
-                  onTap: () {
-                    // Update the state of the app
-                    // ...
-                    // Then close the drawer
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                    title: Text('Logout'),
-                    onTap: () async {
-                      await storage.write(key: "token", value: "");
-                      //print("storage.read() = " + await storage.read(key: "token"));
-                      FlushBarMessage.goodMessage(content: "You logged out of We'Work").showFlushBar(context).then((_) {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (BuildContext context) => Login()),
-                                (Route<dynamic> route) => false
-                        );
-                      });
-                    }
-                ),
-              ],
-            ),
-          ),
-        )
+        drawer: CustonDrawer()
     );
   }
 

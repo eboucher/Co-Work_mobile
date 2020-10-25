@@ -2,7 +2,7 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 
 
-class WorkSpace {
+class Workspace {
   String id;
   String description;
   String name;
@@ -10,17 +10,17 @@ class WorkSpace {
   List<Tool> tools;
 
   static convert(Map map) {
-     WorkSpace openSpace = new WorkSpace();
+     Workspace openSpace = new Workspace();
      openSpace.id = map['id'];
      openSpace.description = map['description'];
      openSpace.name = map['name'];
-     openSpace.rooms = new List<Room>.from(Utilities.convertArray(map['rooms'],Room.convert));
-     openSpace.tools = new List<Tool>.from(Utilities.convertArray(map['tools'],Tool.convert));
+     openSpace.rooms = new List<Room>.from(Utilities.convertArray(map['rooms'], Room.convert));
+     openSpace.tools = new List<Tool>.from(Utilities.convertArray(map['tools'], Tool.convert));
      return openSpace;
   }
 
-  static returnByID(List<WorkSpace> openSpaces,String id) {
-    for (WorkSpace openSpace in openSpaces) {
+  static returnByID(List<Workspace> openSpaces,String id) {
+    for (Workspace openSpace in openSpaces) {
       if (id==openSpace.id) {
         return openSpace;
       }
@@ -28,11 +28,11 @@ class WorkSpace {
   }
 }
 
-class WorkSpaceId{
+class WorkspaceId{
   String id;
   String name;
   static dynamic convert(Map map) {
-    WorkSpaceId openSpace = new WorkSpaceId();
+    WorkspaceId openSpace = new WorkspaceId();
     openSpace.id = map['id'];
     openSpace.name = map['name'];
     return openSpace;
@@ -43,14 +43,14 @@ class Room {
   String id;
   String description;
   String name;
-  WorkSpaceId openSpace;
+  WorkspaceId openSpace;
   bool available = true;
   static dynamic convert(Map map) {
     Room room = new Room();
     room.id = map['id'];
     room.description = map['description'];
     room.name = map['name'];
-    room.openSpace = WorkSpaceId.convert(map['openSpace']);
+    room.openSpace = WorkspaceId.convert(map['openSpace']);
     return room;
   }
 }
@@ -93,7 +93,7 @@ class Booking {
     booking.end = DateTime.parse(map['end']);
     booking.food = map['food'];
     booking.room = Room.convert(map['room']);
-    booking.tools =  new List<Tool>.from(Utilities.convertArray(map['tools'],Tool.convert));
+    booking.tools =  new List<Tool>.from(Utilities.convertArray(map['tools'], Tool.convert));
     booking.user = map['user']['id'];
     return booking;
   }
@@ -139,7 +139,13 @@ class BookingCreation {
   List<String> tools;
 
   toJson() {
-    Map<String,dynamic> json={'start':start,'end':end,'food':food,'room':room,'tools':tools};
+    Map<String,dynamic> json = {
+      'start':start,
+      'end':end,
+      'food':food,
+      'room':room,
+      'tools':tools
+    };
     return json;
   }
 }

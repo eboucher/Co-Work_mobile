@@ -6,7 +6,7 @@ import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:http/http.dart' as http;
 String base ="openSpace";
 
-class WorkSpaceService {
+class WorkspaceService {
 
 
   static dynamic read() async {
@@ -22,7 +22,7 @@ class WorkSpaceService {
       return responseJson;
 
     } else {
-      throw Exception('Erreur read');
+      throw Exception('Read error');
     }
 
   }
@@ -40,7 +40,7 @@ class WorkSpaceService {
       return responseJson;
 
     } else {
-      throw Exception('Erreur read');
+      throw Exception('Read error');
     }
 
   }
