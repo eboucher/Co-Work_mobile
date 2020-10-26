@@ -4,7 +4,7 @@ import 'package:cowork_mobile/models/workspace_model.dart';
 import 'package:cowork_mobile/services/workspace_service.dart';
 import 'package:cowork_mobile/services/booking_service.dart';
 import 'package:cowork_mobile/helpers/constants.dart';
-import 'package:cowork_mobile/widgets/CustomDrawer.dart';
+import 'package:cowork_mobile/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,9 +34,9 @@ class _BookingState extends State<Booking> {
   SortedTool availableTool = new SortedTool();
   Room roomSelected;
   bool showFromTP = true;
-  bool showToTP = false;
-  bool showRoomSelection = false;
-  bool noHourAvailable = false;
+  bool showToTP = true;
+  bool showRoomSelection = true;
+  bool noHourAvailable = true;
 
   var hourArray = [
     '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00',
@@ -112,11 +112,15 @@ class _BookingState extends State<Booking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-      appBar: AppBar(
-          backgroundColor: PRIMARY_COLOR,
-          title: Text("Booking")
-      ),
+        appBar: AppBar(
+          backgroundColor: Color(0xff2446a6),
+          title: Text(APP_TITLE),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed:() => Navigator.pop(context),
+          ),
+        ),
 
       body: Column(
         children:[
@@ -245,7 +249,7 @@ class _BookingState extends State<Booking> {
               Icon(
                 Icons.laptop,
                 color: Colors.black,
-                size: 48.0,
+                size: 30.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
 
@@ -266,7 +270,7 @@ class _BookingState extends State<Booking> {
               Visibility(
                 visible: availableTool.laptops.length == 0 ,
                 child: Text(
-                  "There are no more computers available",
+                  "Laptops currently unavailable",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -275,7 +279,7 @@ class _BookingState extends State<Booking> {
               Icon(
                 Icons.local_printshop,
                 color: Colors.black,
-                size: 48.0,
+                size: 30.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
 
@@ -296,7 +300,7 @@ class _BookingState extends State<Booking> {
               Visibility(
                 visible: availableTool.printers.length == 0,
                 child: Text(
-                  "There are no more printers available",
+                  "Printers currently available",
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -306,7 +310,7 @@ class _BookingState extends State<Booking> {
               Icon(
                 Icons.fastfood,
                 color: Colors.black,
-                size: 48.0,
+                size: 30.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
 
@@ -319,6 +323,18 @@ class _BookingState extends State<Booking> {
                   setState( () => foodNumber = newRating );
                 },
                 min:0.0
+              ),
+
+              RaisedButton(
+                  child: const Text(
+                    'Book',
+                    style: TextStyle(fontSize: 16)
+                  ),
+                  onPressed: !isButtonAble() ? null: () {
+                    book();
+                  },
+                  disabledTextColor: Colors.white60,
+                  disabledColor: Colors.blueAccent
               ),
             ]
           )
@@ -390,15 +406,15 @@ class _BookingState extends State<Booking> {
   }
 
   void _startHourChanged(TimeOfDay hour) {
-    noHourAvailable = false;
-    this.showRoomSelection = false;
+    noHourAvailable = true; //false actually
+    this.showRoomSelection = true; //false actually
     this.startHour = hour;
     this.roomSelected = null;
 
     if(available.availableHour[hour.hour.toString()] == locationSelected.rooms.length) {
       print("nothing");
       noHourAvailable = true;
-      showToTP=false;
+      showToTP = true; //false actually
       setState(() =>{});
       return;
     }

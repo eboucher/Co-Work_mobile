@@ -1,5 +1,6 @@
 import 'package:cowork_mobile/component/flush_bar_message.dart';
 import 'package:cowork_mobile/screens/bookings.dart';
+import 'package:cowork_mobile/screens/form_block.dart';
 import 'package:cowork_mobile/screens/locations.dart';
 import 'package:cowork_mobile/screens/login.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,21 @@ class _CustonDrawerState extends State<CustonDrawer> {
                 Navigator.push(  context,
                   MaterialPageRoute(
                       builder: (context) => Bookings()
+                  ),
+                );
+                //Navigator.pop(context);
+              },
+            ),
+
+            ListTile(
+              title: Text('Form Block'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.push(  context,
+                  MaterialPageRoute(
+                      builder: (context) => FormBlock()
                   ),
                 );
                 //Navigator.pop(context);

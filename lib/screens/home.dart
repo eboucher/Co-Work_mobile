@@ -1,7 +1,7 @@
 import 'package:cowork_mobile/data/locations_data.dart';
 import 'package:cowork_mobile/helpers/constants.dart';
 import 'package:cowork_mobile/models/user_model.dart';
-import 'package:cowork_mobile/widgets/CustomDrawer.dart';
+import 'package:cowork_mobile/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'locations.dart';
