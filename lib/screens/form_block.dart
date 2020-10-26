@@ -24,18 +24,15 @@ class AllFieldsFormBloc extends FormBloc<String, String> {
   final boolean2 = BooleanFieldBloc();
   // ignore: close_sinks
   final select1 = SelectFieldBloc(
-    items: ['Option 1', 'Option 2'],
+    items: ['Call Room', 'Cozy Louge', 'Meeting Room'],
   );
   // ignore: close_sinks
   final select2 = SelectFieldBloc(
-    items: ['Option 1', 'Option 2'],
+    items: ['Call Room', 'Cozy Louge', 'Meeting Room'],
   );
   // ignore: close_sinks
   final multiSelect1 = MultiSelectFieldBloc<String, dynamic>(
-    items: [
-      'Option 1',
-      'Option 2',
-    ],
+    items: ['Call Room', 'Cozy Louge', 'Meeting Room'],
   );
   // ignore: close_sinks
   final date1 = InputFieldBloc<DateTime, Object>();
@@ -43,6 +40,7 @@ class AllFieldsFormBloc extends FormBloc<String, String> {
   final dateAndTime1 = InputFieldBloc<DateTime, Object>();
   // ignore: close_sinks
   final time1 = InputFieldBloc<TimeOfDay, Object>();
+  // ignore: close_sinks
   final time2 = InputFieldBloc<TimeOfDay, Object>();
 
   AllFieldsFormBloc() {
@@ -142,39 +140,49 @@ class AllFieldsForm extends StatelessWidget {
                             prefixIcon: Icon(Icons.calendar_today),
                           ),
                         ),
-                        TimeFieldBlocBuilder(
-                          timeFieldBloc: formBloc.time1,
-                          format: DateFormat('hh:mm a'),
-                          initialTime: TimeOfDay.now(),
-                          decoration: InputDecoration(
-                            labelText: 'Start',
-                            prefixIcon: Icon(Icons.access_time),
-                          ),
-                        ),
-                        TimeFieldBlocBuilder(
-                          timeFieldBloc: formBloc.time2,
-                          format: DateFormat('hh:mm a'),
-                          initialTime: TimeOfDay.now(),
-                          decoration: InputDecoration(
-                            labelText: 'End',
-                            prefixIcon: Icon(Icons.access_time),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              child: TimeFieldBlocBuilder(
+                                timeFieldBloc: formBloc.time1,
+                                format: DateFormat('hh:mm a'),
+                                initialTime: TimeOfDay.now(),
+                                decoration: InputDecoration(
+                                  labelText: 'Start',
+                                  prefixIcon: Icon(Icons.access_time),
+                                ),
+                              ),
+                            ),
+                            Container(width: 10),
+                            Expanded(
+                              child: TimeFieldBlocBuilder(
+                                timeFieldBloc: formBloc.time2,
+                                format: DateFormat('hh:mm a'),
+                                initialTime: TimeOfDay.now(),
+                                decoration: InputDecoration(
+                                  labelText: 'End',
+                                  prefixIcon: Icon(Icons.access_time),
+                                ),
+                              ),
+                            ),
+                          ]
                         ),
                         DropdownFieldBlocBuilder<String>(
                           selectFieldBloc: formBloc.select1,
                           decoration: InputDecoration(
-                            labelText: 'DropdownFieldBlocBuilder',
-                            prefixIcon: Icon(Icons.sentiment_satisfied),
+                            labelText: 'Select room type',
+                            prefixIcon: Icon(Icons.home_work_outlined),
                           ),
                           itemBuilder: (context, value) => value,
                         ),
-                        RadioButtonGroupFieldBlocBuilder<String>(
-                          selectFieldBloc: formBloc.select2,
+                        DropdownFieldBlocBuilder<String>(
+                          selectFieldBloc: formBloc.select1,
                           decoration: InputDecoration(
-                            labelText: 'RadioButtonGroupFieldBlocBuilder',
-                            prefixIcon: SizedBox(),
+                            labelText: 'Select room',
+                            prefixIcon: Icon(Icons.home_work_outlined),
                           ),
-                          itemBuilder: (context, item) => item,
+                          itemBuilder: (context, value) => value,
                         ),
                         CheckboxGroupFieldBlocBuilder<String>(
                           multiSelectFieldBloc: formBloc.multiSelect1,
@@ -197,6 +205,16 @@ class AllFieldsForm extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             child: Text('CheckboxFieldBlocBuilder'),
                           ),
+                        ),
+                        RaisedButton(
+                            child: const Text(
+                                'Book',
+                                style: TextStyle(fontSize: 16)
+                            ),
+                            onPressed: null
+                            ,
+                            disabledTextColor: Colors.white60,
+                            disabledColor: Colors.blueAccent
                         ),
                       ],
                     ),
