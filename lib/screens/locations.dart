@@ -77,7 +77,7 @@ class _LocationsState extends State<Locations> {
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          height: 500,
+                          height: 520,
                           width: double.maxFinite,
                           child: Card(
                             elevation: 5,
@@ -216,123 +216,131 @@ class _LocationsState extends State<Locations> {
   Widget addOns(location) {
     const IconData network_wifi = IconData(0xe8a6, fontFamily: 'MaterialIcons');
     const IconData calendar_today = IconData(0xe623, fontFamily: 'MaterialIcons');
+    const IconData airline_seat_recline_extra = IconData(0xe588, fontFamily: 'MaterialIcons');
+    const IconData contact_phone_rounded = IconData(0xf136, fontFamily: 'MaterialIcons');
 
     return Wrap(
         direction: Axis.horizontal,
         children: <Widget>[
-
-          Wrap(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(30),
-                width: 180,
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                        network_wifi,
-                        color: Colors.orange,
-                        size: 12),
-                    RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        text: '\nHigh speed Wi-Fi',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 10,
+          Column(
+            children: [
+              Wrap(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    width: 160,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                            network_wifi,
+                            color: Colors.orange,
+                            size: 12),
+                        RichText(
+                          textAlign: TextAlign.left,
+                          text: TextSpan(
+                            text: '\nHigh speed Wi-Fi',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+
+              Wrap(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    width: 140,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                            calendar_today,
+                            color: Colors.brown,
+                            size: 12),
+                        RichText(
+                          textAlign: TextAlign.left,
+                          text: TextSpan(
+                            text: '\nMeeting rooms',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
 
-          Wrap(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(30),
-                width: 180,
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                        calendar_today,
-                        color: Colors.brown,
-                        size: 12),
-                    RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        text: '\nBookable meeting rooms',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 10,
+          Column(
+            children: [
+              Wrap(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    width: 160,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                            contact_phone_rounded,
+                            color: Colors.blue,
+                            size: 12),
+                        RichText(
+                          textAlign: TextAlign.left,
+                          text: TextSpan(
+                            text: '\nBookable call rooms',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
+
+              Wrap(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    width: 180,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                            airline_seat_recline_extra,
+                            color: Colors.orangeAccent,
+                            size: 12),
+                        RichText(
+                          textAlign: TextAlign.left,
+                          text: TextSpan(
+                            text: '\nCozy lounges',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
-          ),
-
-          Wrap(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(30),
-                width: 180,
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                        network_wifi,
-                        color: Colors.orange,
-                        size: 12),
-                    RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        text: '\nBookable call rooms',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          Wrap(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(30),
-                width: 180,
-                child: Column(
-                  children: <Widget>[
-                    Icon(
-                        network_wifi,
-                        color: Colors.orange,
-                        size: 12),
-                    RichText(
-                      textAlign: TextAlign.left,
-                      text: TextSpan(
-                        text: '\nCozy lounges',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
+          )
         ]
     );
   }

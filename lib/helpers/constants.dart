@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 //final URL_API = "http://localhost:1337";
 final URL_API = "http://10.0.2.2:1337";
+//final URL_API = "http://192.168.1.83:1337";
 final APP_TITLE = "Co\'Work";
 
 final PRIMARY_COLOR = Color(0xFF283593);

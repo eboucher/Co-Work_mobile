@@ -179,11 +179,6 @@ class _BookingState extends State<Booking> {
             )
           ),
 
-          RaisedButton(
-            child: Text('Choose start time'),
-            onPressed: _chooseStartTime,
-          ),
-
           Visibility(
             visible: noHourAvailable,
             child:Text(
@@ -312,17 +307,6 @@ class _BookingState extends State<Booking> {
                 color: Colors.black,
                 size: 30.0,
                 semanticLabel: 'Text to announce in accessibility modes',
-              ),
-
-              Slider(
-                value: foodNumber,
-                label: "$foodNumber",
-                max : 20.0,
-                divisions: 20,
-                onChanged: (newRating) {
-                  setState( () => foodNumber = newRating );
-                },
-                min:0.0
               ),
 
               RaisedButton(

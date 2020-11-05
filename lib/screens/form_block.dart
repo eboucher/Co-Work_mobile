@@ -24,15 +24,15 @@ class AllFieldsFormBloc extends FormBloc<String, String> {
   final boolean2 = BooleanFieldBloc();
   // ignore: close_sinks
   final select1 = SelectFieldBloc(
-    items: ['Call Room', 'Cozy Louge', 'Meeting Room'],
+    items: ['Call Room', 'Cozy Lounge', 'Meeting Room'],
   );
   // ignore: close_sinks
   final select2 = SelectFieldBloc(
-    items: ['Call Room', 'Cozy Louge', 'Meeting Room'],
+    items: ['Call Room', 'Cozy Lounge', 'Meeting Room'],
   );
   // ignore: close_sinks
   final multiSelect1 = MultiSelectFieldBloc<String, dynamic>(
-    items: ['Call Room', 'Cozy Louge', 'Meeting Room'],
+    items: ['Call Room', 'Cozy Lounge', 'Meeting Room'],
   );
   // ignore: close_sinks
   final date1 = InputFieldBloc<DateTime, Object>();
